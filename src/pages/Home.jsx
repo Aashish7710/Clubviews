@@ -291,7 +291,7 @@ const Home = () => {
                   Club<br /><span className="text-orange-600 text-6xl">Hall of Fame</span>
                 </h2>
                 <p className="text-neutral-500 leading-relaxed mb-8">
-                  Recognition for the most active student organizations at NITJ. Activity is measured by the total number of events successfully hosted and registered through CampusNode.
+                  Recognition for the most active student organizations at NITA. Activity is measured by the total number of events successfully hosted and registered through CampusNode.
                 </p>
 
               </ScrollReveal>
@@ -428,14 +428,14 @@ const Home = () => {
               <div>
                 <SectionLabel>Our Vision</SectionLabel>
                 <h2 className="font-black text-[clamp(32px,4vw,56px)] leading-[1.1] tracking-tight text-black mb-8">
-                  The Digital Pulse of<br /><span className="text-orange-600">NITJ Campus Life.</span>
+                  The Digital Pulse of<br /><span className="text-orange-600">NITA Campus Life.</span>
                 </h2>
                 <div className="space-y-6 text-neutral-700 leading-relaxed text-[17px]">
                   <p>
-                    CampusNode is the unified digital gateway designed specifically for the NIT Jalandhar community. We eliminate the chaos of multiple WhatsApp groups and scattered posters by providing a single, seamless platform where clubs can thrive and students can discover their passions.
+                    CampusNode is the unified digital gateway designed specifically for the NIT Allahabad community. We eliminate the chaos of multiple WhatsApp groups and scattered posters by providing a single, seamless platform where clubs can thrive and students can discover their passions.
                   </p>
                   <p>
-                    By centralizing event registrations, club memberships, and campus updates, we are building a more connected and engaged student body. Our mission is to ensure that no opportunity at NITJ goes unnoticed and every talent finds its stage.
+                    By centralizing event registrations, club memberships, and campus updates, we are building a more connected and engaged student body. Our mission is to ensure that no opportunity at NITA goes unnoticed and every talent finds its stage.
                   </p>
                 </div>
 
@@ -487,7 +487,7 @@ const Home = () => {
               </h2>
               <p className="text-neutral-600 max-w-2xl mx-auto text-[18px] leading-relaxed">
                 We are a team of passionate student developers and campus leaders dedicated to
-                bridging the gap between NITJ clubs and students through seamless digital experiences.
+                bridging the gap between NITA clubs and students through seamless digital experiences.
               </p>
             </div>
           </ScrollReveal>
