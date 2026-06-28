@@ -1,0 +1,309 @@
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\App.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\BottomNav.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       no-unused-vars
+   3:39  error  'ShieldCheck' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 no-unused-vars
+   3:66  error  'Package' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     no-unused-vars
+  36:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  34 |     // Close drawer on route change
+  35 |     useEffect(() => {
+> 36 |         setDrawerOpen(false);
+     |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  37 |     }, [location.pathname]);
+  38 |
+  39 |     // Click-outside to close drawer  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\CalendarDropdown.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-unused-vars
+   3:44  error  'Check' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-unused-vars
+  14:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  12 |         const eventId = event._id || event.slug;
+  13 |         if (eventId && localStorage.getItem(`calendar_synced_${eventId}`) === 'true') {
+> 14 |             setIsSynced(true);
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |         }
+  16 |     }, [event]);
+  17 |  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\ClubLeaderboard.jsx
+  1:8   error  'React' is defined but never used             no-unused-vars
+  4:10  error  'ArrowUpRightIcon' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\EventCard.jsx
+  1:8   error  'React' is defined but never used                 no-unused-vars
+  3:10  error  'loadRazorpay' is defined but never used          no-unused-vars
+  6:29  error  'onRegister' is defined but never used            no-unused-vars
+  7:20  error  'description' is assigned a value but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\Footer.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\HomeFooter.jsx
+  1:8  error  'React' is defined but never used                 no-unused-vars
+  6:8  error  'ScrollReveal' is defined but never used          no-unused-vars
+  8:9  error  'currentYear' is assigned a value but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\Navbar.jsx
+    1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            no-unused-vars
+   10:10  error  'SettingsIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     no-unused-vars
+   61:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  59 |   // ── Close everything on route change ─────────────────────────────────────
+  60 |   useEffect(() => {
+> 61 |     setMobileOpen(false);
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  62 |     setDropdownOpen(false);
+  63 |     setSearchOpen(false);
+  64 |     setMobileSearchOpen(false);  react-hooks/set-state-in-effect
+  154:9   error  'initials' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\NotificationPopup.jsx
+  2:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\ScrollReveal.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\SearchBar.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         no-unused-vars
+   1:46  error  'useCallback' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   no-unused-vars
+  76:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  74 |     useEffect(() => {
+  75 |         if (!isOpen) {
+> 76 |             setQuery("");
+     |             ^^^^^^^^ Avoid calling setState() directly within an effect
+  77 |             setResults([]);
+  78 |         }
+  79 |     }, [isOpen]);                                react-hooks/set-state-in-effect
+  85:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  83 |     useEffect(() => {
+  84 |         if (!query.trim()) {
+> 85 |             setResults([]);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  86 |             return;
+  87 |         }
+  88 |         const q = query.toLowerCase().trim();  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\skeletons\ClubCardSkeleton.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\skeletons\EventCardSkeleton.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\components\ui\Skeleton.jsx
+  1:8   error  'React' is defined but never used  no-unused-vars
+  2:10  error  'cn' is defined but never used     no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\context\NotificationContext.jsx
+  2:8   error  'React' is defined but never used                                                                                               no-unused-vars
+  7:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\context\SocketContext.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     no-unused-vars
+  10:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react-refresh/only-export-components
+  31:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  29 |             const newSocket = io(API_URL.replace("/api", ""));
+  30 |
+> 31 |             setSocket(newSocket);
+     |             ^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |
+  33 |             newSocket.on("connect", () => {
+  34 |                 console.log("Connected to socket server");  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\context\ThemeContext.jsx
+  1:8   error  'React' is defined but never used                                                                                               no-unused-vars
+  5:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\ClubDetails.jsx
+   1:8   error  'React' is defined but never used          no-unused-vars
+  18:10  error  'user' is assigned a value but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\ClubMembers.jsx
+    1:8  error    'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         no-unused-vars
+   26:7  error    'RoleBadge' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            no-unused-vars
+  113:5  error    Error: Cannot access variable before it is declared
+
+`fetchMembers` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  111 |
+  112 |   useEffect(() => {
+> 113 |     fetchMembers();
+      |     ^^^^^^^^^^^^ `fetchMembers` accessed before it is declared
+  114 |   }, [clubId]);
+  115 |
+  116 |   const fetchMembers = async () => {
+
+  114 |   }, [clubId]);
+  115 |
+> 116 |   const fetchMembers = async () => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |     try {
+      | ^^^^^^^^^
+> 118 |       setLoading(true);
+      …
+      | ^^^^^^^^^
+> 125 |     }
+      | ^^^^^^^^^
+> 126 |   };
+      | ^^^^^ `fetchMembers` is declared here
+  127 |
+  128 |   const handleInvite = async (e) => {
+  129 |     e.preventDefault();  react-hooks/immutability
+  114:6  warning  React Hook useEffect has a missing dependency: 'fetchMembers'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/exhaustive-deps
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Clubspage.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Contribute.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\CreateEvent.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\EventDetails.jsx
+    1:8   error  'React' is defined but never used                      no-unused-vars
+   23:25  error  'setExternalEmail' is assigned a value but never used  no-unused-vars
+   24:24  error  'setExternalName' is assigned a value but never used   no-unused-vars
+  317:9   error  'user' is assigned a value but never used              no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\EventFeed.jsx
+   1:8   error    'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+   5:10  error    'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         no-unused-vars
+  40:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  38 |
+  39 |   useEffect(() => {
+> 40 |     fetchEvents();
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  41 |     const interval = setInterval(fetchEvents, 60000);
+  42 |     return () => clearInterval(interval);
+  43 |   }, []);  react-hooks/set-state-in-effect
+  43:6   warning  React Hook useEffect has a missing dependency: 'fetchEvents'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/exhaustive-deps
+  77:9   error    'availableMonths' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\EventGuid.jsx
+  1:8   error  'React' is defined but never used  no-unused-vars
+  2:10  error  'Link' is defined but never used   no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\FAQ.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\ForgotPassword.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Home.jsx
+    1:8   error    'React' is defined but never used                                                                                   no-unused-vars
+   10:10  error    'InstagramIcon' is defined but never used                                                                           no-unused-vars
+   13:10  error    'MailIcon' is defined but never used                                                                                no-unused-vars
+   71:7   error    'BtnPrimary' is assigned a value but never used                                                                     no-unused-vars
+  101:6   warning  React Hook useEffect has a missing dependency: 'bgImages.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Login.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  28:10  error  'role' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-unused-vars
+  28:16  error  'setRole' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               no-unused-vars
+  42:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  40 |   useEffect(() => {
+  41 |     const randomQ = CAPTCHA_QUESTIONS[Math.floor(Math.random() * CAPTCHA_QUESTIONS.length)];
+> 42 |     setCaptcha(randomQ);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |   }, []);
+  44 |
+  45 |   const handleChange = (e) => {  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Maintainance.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\PrivacyPolicy.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Profile.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-unused-vars
+  15:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  13 |         const storedRole = localStorage.getItem('role');
+  14 |         if (storedUser) {
+> 15 |             setUser(storedUser);
+     |             ^^^^^^^ Avoid calling setState() directly within an effect
+  16 |             setRole(storedRole);
+  17 |
+  18 |             if (storedRole === 'club' && storedUser.clubId) {  react-hooks/set-state-in-effect
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\RegisterLanding.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\RegisterStudent.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\Team.jsx
+  1:8   error  'React' is defined but never used           no-unused-vars
+  3:10  error  'ArrowRightIcon' is defined but never used  no-unused-vars
+  4:10  error  'InstagramIcon' is defined but never used   no-unused-vars
+  7:10  error  'MailIcon' is defined but never used        no-unused-vars
+
+C:\Users\aashi\Documents\CLUBviews\client--\src\pages\TermsAndConditions.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+✖ 81 problems (78 errors, 3 warnings)
+
