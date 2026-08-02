@@ -53,7 +53,7 @@ const Team = () => {
                                             </div>
                                             <div className="text-left">
                                                 <div className="text-[11px] font-semibold tracking-[0.2em] text-orange-600 mb-1"> Coordinator</div>
-                                                <h3 className="text-2xl font-black text-black mb-2">Himanshu Yadav</h3>
+                                                <h3 className="text-2xl font-black text-black mb-2">Tanu Choudhary</h3>
                                                 <div className="flex gap-3 text-neutral-700">
                                                     <a href="#" className="hover:text-orange-600">
                                                         <LinkedinIcon />
