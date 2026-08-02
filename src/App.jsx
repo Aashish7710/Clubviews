@@ -10,6 +10,7 @@ import Team from './pages/Team';
 import RegisterStudent from './pages/RegisterStudent';
 
 import RegisterLanding from './pages/RegisterLanding';
+import Login from './pages/Login';
 
 import HomePage from "./pages/Home";
 import ClubsPage from "./pages/Clubspage";
@@ -32,7 +33,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/clubs" element={<ClubsPage />} />
             <Route path="/events" element={<EventFeed />} />
-
+            <Route path="/Login" element={<Login />} />
             <Route path="/register" element={<RegisterLanding />} />
             <Route path="/register/student" element={<RegisterStudent />} />
             <Route path="/faq" element={<FAQ />} />

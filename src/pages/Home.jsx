@@ -123,7 +123,7 @@ const Home = () => {
           {bgImages.map((img, idx) => (
             <img
               key={idx}
-              src={img}
+              src="https://share.google/AGUpQScxNJ0Q6mCBk"
               alt="University Campus"
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${bgIndex === idx ? 'opacity-100' : 'opacity-0'}`}
             />
