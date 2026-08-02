@@ -256,11 +256,11 @@ const Navbar = () => {
             <div className="flex items-center" ref={searchWrapperRef}>
               <button
                 onClick={() => setSearchOpen((prev) => !prev)}
-                className="search-trigger-btn"
+                className="p-2 rounded-sm hover:bg-neutral-200 transition-colors duration-150 cursor-pointer text-black"
                 aria-label="Search"
                 title="Search (Ctrl+K)"
               >
-                <i className={searchOpen ? "ri-close-line" : "ri-search-line"} />
+                <i className={searchOpen ? "ri-close-line text-lg" : "ri-search-line text-lg"} />
               </button>
               <SearchBar
                 isOpen={searchOpen}
@@ -615,11 +615,6 @@ const Navbar = () => {
         isMobile={true}
       />
 
-      {/* ── Mobile Search Overlay ──────────────────────────────────────── */}
-      <div
-        className={`search-overlay ${mobileSearchOpen ? 'search-overlay-visible' : ''} md:hidden`}
-        onClick={() => setMobileSearchOpen(false)}
-      />
     </>
   );
 };
