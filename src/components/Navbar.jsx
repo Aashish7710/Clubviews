@@ -204,7 +204,7 @@ const Navbar = () => {
         <div className="max-w-[1200px] mx-auto px-5 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* ── Logo ─────────────────────────────────────────────────────── */}
           <div className="flex items-center sm:gap-5 gap-auto">
-            <img src="nitjlogo.png" alt="" className="w-11 h-12" />
+            <img src="/images/nitAlogo.png" alt="" className="w-11 h-12" />
             <Link
               to="/"
               className="flex items-center gap-2.5 shrink-0 group logofont hidden sm:block "
