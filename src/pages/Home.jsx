@@ -90,7 +90,7 @@ const BtnSecondary = ({ to, children }) => (
 const Home = () => {
 
   const [tab, setTab] = useState("students");
-  const bgImages = ["csh.jpeg", "mainbuilding.jpeg"];
+  const bgImages = ["/images/hero.jpg"];
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
