@@ -90,7 +90,7 @@ const BtnSecondary = ({ to, children }) => (
 const Home = () => {
 
   const [tab, setTab] = useState("students");
-  const bgImages = ["/images/hero.jpg"];
+  const bgImages = ["/images/hero.png"];
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
@@ -128,7 +128,7 @@ const Home = () => {
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${bgIndex === idx ? 'opacity-100' : 'opacity-0'}`}
             />
           ))}
-          <div className="absolute inset-0 bg-white/20 dark:bg-black/60 backdrop-blur-[2px]"></div>
+          <div className="absolute inset-0 bg-white/5 dark:bg-black/20 backdrop-blur-[2px]"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-white via-white/40 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/60 dark:to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white/90 to-transparent dark:from-[#0a0a0a]/90 dark:to-transparent"></div>
         </div>
@@ -363,7 +363,7 @@ const Home = () => {
               {/* Right: image */}
               <div className="relative hidden md:block">
                 <img
-                  src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80"
+                  src="/images/sideimg.png"
                   alt="Student life"
                   className="w-full h-[400px] object-cover rounded-xl border border-neutral-200"
                   style={{ filter: "saturate(0.9)" }}
@@ -451,7 +451,7 @@ const Home = () => {
                   </div>
                   <div>
                     <div className="text-4xl font-black text-black">100%</div>
-                    <div className="text-[11px] font-bold  tracking-widest text-neutral-400 mt-1">NITJ Focused</div>
+                    <div className="text-[11px] font-bold  tracking-widest text-neutral-400 mt-1">NITA Focused</div>
                   </div>
                 </div>
               </div>
@@ -463,12 +463,12 @@ const Home = () => {
                 <div className="w-1/2 max-w-[280px] aspect-[3/4] border-2 border-gray-200 rounded-sm bg-neutral-100 overflow-hidden translate-y-8 ">
                   <div className="w-full h-full flex items-center justify-center text-neutral-300">
                     {/* <i className="ri-smartphone-line text-6xl" /> */}
-                    <img src="mainbuilding.jpeg" alt="oh not found" className="w-full h-full object-cover" />
+                    <img src="/images/Adminbulding.png" alt="oh not found" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 <div className="w-1/2 max-w-[280px] aspect-[3/4] border-2 border-gray-200 rounded-sm bg-neutral-200 overflow-hidden -translate-y-4 ">
                   <div className="w-full h-full flex items-center justify-center text-neutral-400">
-                    <img src="itbuilding.jpeg" alt="ohhhhhh not found yaar" className="w-full h-full object-cover" />
+                    <img src="/images/mainbuilding.png" alt="ohhhhhh not found yaar" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -507,7 +507,7 @@ const Home = () => {
                     </div>
                     <div className="text-left">
                       <div className="text-[11px] font-semibold tracking-[0.2em] text-orange-600 mb-1"> Coordinator</div>
-                      <h3 className="text-2xl font-black text-black mb-2">Himanshu Yadav</h3>
+                      <h3 className="text-2xl font-black text-black mb-2">Tanu Choudhary</h3>
                       <div className="flex gap-3 text-neutral-700">
                         <a href="#" className="hover:text-orange-600">
                           <LinkedinIcon />
