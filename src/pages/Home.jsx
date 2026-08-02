@@ -150,7 +150,7 @@ const Home = () => {
           {/* Sub + CTAs */}
           <ScrollReveal delay={0.3}>
             <div className="mt-12 flex flex-wrap items-end gap-10 justify-between">
-              <p className="text-[17px] font-light text-neutral-700 max-w-sm leading-relaxed">
+              <p className="text-[17px] font-light text-neutral-200 max-w-sm leading-relaxed">
                 Stop hunting through a dozen WhatsApp groups just to find out what's happening. From late-night hackathons to cultural fests, CampusNode brings the best of NITA campus life right to your screen. Find your tribe, join the clubs you love, and never miss a beat again.</p>
               <div className="flex gap-3 flex-wrap">
                 <Link
