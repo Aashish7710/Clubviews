@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../Api/axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 const CAPTCHA_QUESTIONS = [
@@ -59,7 +59,7 @@ const Login = () => {
     setError('');
     setIsLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
+      const res = await api.post("/api/auth/login", formData);
       
       if (res.data.needs2FA) {
         setShowOTP(true);
@@ -90,11 +90,10 @@ const Login = () => {
     setError('');
     setIsLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify-2fa`, {
+      const res = await api.post("/api/auth/verify-2fa", {
         email: formData.email,
         otp
       });
-      
       localStorage.setItem('user', JSON.stringify(res.data.user));
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('token', res.data.token);

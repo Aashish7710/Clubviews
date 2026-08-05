@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../Api/axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useNotification } from '../context/NotificationContext';
 import { PROGRAM_LABELS, PROGRAM_OPTIONS } from '../constants/programs';
@@ -44,7 +44,7 @@ const RegisterStudent = () => {
         setError('');
         setLoading(true);
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register/student`, formData);
+            const res = await api.post('/api/auth/register/student', formData);
             if (res.data.user) {
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 localStorage.setItem('role', res.data.role);
