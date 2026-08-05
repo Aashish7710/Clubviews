@@ -109,10 +109,6 @@ const ClubMembers = () => {
   const [inviteEmail, setInviteEmail] = useState("");
   const [selectedRole, setSelectedRole] = useState(ClubMemberRole.MEMBER);
 
-  useEffect(() => {
-    fetchMembers();
-  }, [clubId]);
-
   const fetchMembers = async () => {
     try {
       setLoading(true);
@@ -124,6 +120,10 @@ const ClubMembers = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchMembers();
+  }, [clubId]);
 
   const handleInvite = async (e) => {
     e.preventDefault();
