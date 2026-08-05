@@ -18,7 +18,7 @@ import ClubMembers from "./pages/ClubMembers";
 import EventFeed from "./pages/EventFeed";
 import EventDetails from "./pages/EventDetails";
 import CreateEvent from "./pages/CreateEvent";
-import CheckIn from "./pages/Checkln";
+import CheckIn from "./pages/CheckIn";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import RegisterLanding from "./pages/RegisterLanding";
