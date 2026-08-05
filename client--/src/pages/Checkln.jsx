@@ -43,21 +43,6 @@ const CheckIn = () => {
   const isProcessingRef = useRef(false);
   const lastScannedCodeRef = useRef(null);
 
-  // RBAC guard + event load
-  useEffect(() => {
-    const storedUserData = localStorage.getItem('user');
-    const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
-    const storedRole = localStorage.getItem('role');
-
-    if (!storedUser) {
-      showNotification('Access Denied', 'error');
-      navigate('/my-events');
-      return;
-    }
-
-    fetchEventDetails(storedUser, storedRole);
-  }, [id]);
-
   const fetchEventDetails = async (storedUser, storedRole) => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/${id}`);
@@ -94,6 +79,27 @@ const CheckIn = () => {
       navigate('/my-events');
     }
   };
+
+  async function onScanSuccess(decodedText) {
+    await processVerification(decodedText, false);
+  }
+
+  function onScanFailure() {}
+
+  // RBAC guard + event load
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('user');
+    const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
+    const storedRole = localStorage.getItem('role');
+
+    if (!storedUser) {
+      showNotification('Access Denied', 'error');
+      navigate('/my-events');
+      return;
+    }
+
+    fetchEventDetails(storedUser, storedRole);
+  }, [id]);
 
   // QR Scanner init/cleanup
   useEffect(() => {
@@ -199,11 +205,7 @@ const CheckIn = () => {
     }
   }
 
-  async function onScanSuccess(decodedText) {
-    await processVerification(decodedText, false);
-  }
 
-  function onScanFailure() {}
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();

@@ -13,6 +13,7 @@
     "@axiomhq/react": "^0.2.2",
     "axios": "^1.17.0",
     "clsx": "^2.1.1",
+    "html5-qrcode": "^2.3.8",
     "lucide-react": "^1.17.0",
     "motion": "^12.40.0",
     "react": "^19.2.6",
