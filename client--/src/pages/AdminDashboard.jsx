@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useNotification } from '../context/NotificationContext';
-import { cachedFetch, invalidateCache } from '../lib/cacheManager';
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState(null);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { useNotification } from "../context/NotificationContext";
 import { ClubMemberRole } from "../types/index.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -103,6 +103,11 @@ const PeopleIcon = () => (
 // ── Main Component ─────────────────────────────────────────────────────────────
 const ClubMembers = () => {
   const { clubId } = useParams();
+  const { showNotification } = useNotification();
+  const toast = {
+    success: (msg) => showNotification(msg, "success"),
+    error: (msg) => showNotification(msg, "error"),
+  };
   const [members, setMembers]       = useState([]);
   const [loading, setLoading]       = useState(true);
   const [inviting, setInviting]     = useState(false);
