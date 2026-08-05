@@ -76,7 +76,7 @@ const ForgotPassword = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-orange-600 focus:ring-1 focus:ring-orange-600 transition-colors"
-              placeholder="example@nitj.ac.in"
+              placeholder="example@nita.ac.in"
             />
           </div>
 

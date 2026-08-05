@@ -10,7 +10,7 @@ export const EVENT_VENUES = [
   "VCH",
   "Science Block",
   "Community Center",
-  "NITJ Temple",
+  "NITA Temple",
   "LT",
   "Online",
   "Department Building",

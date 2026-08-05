@@ -33,7 +33,7 @@ const Team = () => {
                                 </h2>
                                 <p className="text-neutral-600 max-w-2xl mx-auto text-[18px] leading-relaxed">
                                     We are a team of passionate student developers and campus leaders dedicated to
-                                    bridging the gap between NITJ clubs and students through seamless digital experiences.
+                                    bridging the gap between NITA clubs and students through seamless digital experiences.
                                 </p>
                             </div>
                         </ScrollReveal>

@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./lib/db.js";
 import authRoutes from "./routers/auth.js";
+import eventRoutes from "./routers/event.js";
+
 
 dotenv.config();
 
@@ -33,6 +35,7 @@ connectDB().catch((err) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

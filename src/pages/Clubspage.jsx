@@ -68,7 +68,7 @@ const ClubsPage = ({ isHome = false }) => {
       {!isHome && (
         <div className="text-center mb-14">
           <h1 className="text-4xl font-black text-black tracking-wide">
-            NITJ Clubs & Societies
+            NITA Clubs & Societies
           </h1>
           <p className="mt-4 text-neutral-500 tracking-widest text-sm font-bold">
             Explore student clubs, connect with coordinators, and join

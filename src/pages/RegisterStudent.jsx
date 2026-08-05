@@ -147,7 +147,7 @@ const RegisterStudent = () => {
                     <div>
                         <label htmlFor="email" className={labelCls}>College Email</label>
                         <input id="email" name="email" type="email" required className={inputCls}
-                            placeholder="name.branch.year@nitj.ac.in" value={formData.email} onChange={handleChange} />
+                            placeholder="name.branch.year@nita.ac.in" value={formData.email} onChange={handleChange} />
                     </div>
 
                     {/* Password */}

@@ -127,8 +127,8 @@ const ClubMembers = () => {
 
   const handleInvite = async (e) => {
     e.preventDefault();
-    if (!inviteEmail.endsWith("@nitj.ac.in")) {
-      toast.error("Only @nitj.ac.in emails allowed");
+    if (!inviteEmail.endsWith("@nita.ac.in")) {
+      toast.error("Only @nita.ac.in emails allowed");
       return;
     }
     try {
@@ -211,7 +211,7 @@ const ClubMembers = () => {
         <form onSubmit={handleInvite} className="flex flex-wrap items-center gap-3">
           <input
             type="email"
-            placeholder="name@nitj.ac.in"
+            placeholder="name@nita.ac.in"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
             required
