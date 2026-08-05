@@ -55,6 +55,26 @@ const AdminDashboard = () => {
         }
     }, [tabParam, role]);
 
+    const fetchManualPayments = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/manual-payments`);
+            setManualPayments(res.data.participations || []);
+            setManualPaymentsSummary(res.data.summary || null);
+        } catch (err) {
+            console.error('Failed to fetch manual payments overview:', err);
+        }
+    };
+
+    const fetchFilteredEventData = async () => {
+        try {
+            const query = new URLSearchParams(filters).toString();
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/event-data-export?${query}`);
+            setEventData(res.data.events || []);
+        } catch (err) {
+            console.error('Failed to fetch filtered event data');
+        }
+    };
+
     useEffect(() => {
         const adminDataString = localStorage.getItem('admin');
         if (!adminDataString) {
@@ -99,26 +119,6 @@ const AdminDashboard = () => {
         };
         fetchData();
     }, [navigate, showNotification]);
-
-    const fetchManualPayments = async () => {
-        try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/manual-payments`);
-            setManualPayments(res.data.participations || []);
-            setManualPaymentsSummary(res.data.summary || null);
-        } catch (err) {
-            console.error('Failed to fetch manual payments overview:', err);
-        }
-    };
-
-    const fetchFilteredEventData = async () => {
-        try {
-            const query = new URLSearchParams(filters).toString();
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/event-data-export?${query}`);
-            setEventData(res.data.events || []);
-        } catch (err) {
-            console.error('Failed to fetch filtered event data');
-        }
-    };
 
     useEffect(() => {
         if (!loading) fetchFilteredEventData();
