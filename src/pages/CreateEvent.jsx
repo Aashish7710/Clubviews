@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { EVENT_VENUES } from '../constants/eventVenues';
+import { EVENT_VENUES } from '../constants/eventVanues';
 import { PROGRAM_LABELS, PROGRAM_OPTIONS } from '../constants/programs';
 import { MediaType } from '../types/index';
 

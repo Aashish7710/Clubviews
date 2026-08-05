@@ -17,6 +17,8 @@ import ClubsPage from "./pages/Clubspage";
 import { ThemeProvider } from "./context/ThemeContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import EventFeed from './pages/EventFeed';
+import EventDetails from "./pages/EventDetails";
+import CreateEvent from "./pages/CreateEvent";
 
 function App() {
   const isMaintenance = import.meta.env.VITE_MAINTENANCE_MODE === 'true';
@@ -33,6 +35,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/clubs" element={<ClubsPage />} />
             <Route path="/events" element={<EventFeed />} />
+            <Route path="/event/:slug" element={<EventDetails />} />
+            <Route path="/create" element={<CreateEvent />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/register" element={<RegisterLanding />} />
             <Route path="/register/student" element={<RegisterStudent />} />

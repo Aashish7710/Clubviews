@@ -27,7 +27,7 @@ const EventGuide = () => {
             Who Can Create Events?
           </h2>
           <p className="text-neutral-700 leading-relaxed mb-4">
-            Only registered <strong>Club Heads</strong> can create events on Campus<span className='text-orange-600'>Node</span>. Each club head represents an official NITJ club and is responsible for managing their events, registrations, and payments.
+            Only registered <strong>Club Heads</strong> can create events on Campus<span className='text-orange-600'>Node</span>. Each club head represents an official NITA club and is responsible for managing their events, registrations, and payments.
           </p>
           <div className="bg-orange-50 border border-orange-200 rounded-sm p-4 text-sm text-orange-800">
             <i className="ri-information-line mr-1" />
@@ -116,7 +116,7 @@ const EventGuide = () => {
                   name="Venue"
                   required
                   type="Dropdown"
-                  desc="Select from NITJ campus venues: Student Activity Centre, IT Building, Central Lawn, Mega Ground, MBH Ground, OAT, CSH, VCH, or Others."
+                  desc="Select from NITA campus venues: Student Activity Centre, IT Building, Central Lawn, Mega Ground, MBH Ground, OAT, CSH, VCH, or Others."
                 />
                 <FieldRow
                   name="Event Image URL"

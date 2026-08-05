@@ -11,7 +11,7 @@ const CAPTCHA_QUESTIONS = [
   { text: "If you have 1 brain and use it, how many brains do you have?", answer: "1" },
   { text: "If WiFi is off, can you browse internet? (yes/no)", answer: "no" },
   { text: "If today is Sunday, is tomorrow Monday? (yes/no)", answer: "yes" },
-   { text: "Is BH8 Hostel in NITJ? (yes/no)", answer: "no" },
+   { text: "Is BH8 Hostel in NITA? (yes/no)", answer: "no" },
   { text: "How many wheels does a normal bike have?", answer: "2" },
   { text: "If you close your eyes, can you see? (yes/no)", answer: "no" },
   { text: "If you drink water, are you hydrated? (yes/no)", answer: "yes" },
@@ -20,7 +20,7 @@ const CAPTCHA_QUESTIONS = [
   { text: "Is Jaipur in Rajasthan? (yes/no)", answer: "yes" },
   { text: "Total digits: 148 ", answer: "3" },
   {text:"Total 4 in 485464",answer:"3"},
-  {text: "Is Yadav Catering in NITJ? (yes/no)",answer:"yes"}
+  {text: "Is Yadav Catering in NITA? (yes/no)",answer:"yes"}
 ];
 
 const Login = () => {

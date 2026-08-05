@@ -21,6 +21,10 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
 
     const DEFAULT_IMAGE = '/CLUBSETU.png';
     const displayImage = event.imageUrl || DEFAULT_IMAGE;
+    
+    const eventId = event.id || _id;
+    const detailLink = `/event/${slug || eventId}`;
+    const canRegister = !isEnded && !isLive;
 
     return (
         <div className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden transition-all hover:-translate-y-0.5 flex flex-col h-full group">
@@ -167,7 +171,7 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
  )}
 
                     {/* Action button */}
-                    {isRegistered ? (
+                    {/* {isRegistered ? (
                         <Link
                             to={`/event/${slug || _id}`}>
                         <div className="flex-1 block text-center py-2 bg-green-50 text-green-700 border-2 border-green-300 rounded-sm text-[11px] font-bold uppercase tracking-widest cursor-pointer">
@@ -187,7 +191,38 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
                         >
                             {(isEnded || isLive) ? 'View Event' : isFull ? 'Waitlist' : 'Register/View'}
                         </Link>
-                    )}
+                    )} */}
+
+
+{isRegistered ? (
+  <Link to={detailLink}>
+    <div className="flex-1 block text-center py-2 bg-green-50 text-green-700 border-2 border-green-300 rounded-sm text-[11px] font-bold uppercase tracking-widest cursor-pointer">
+      ✓ Registered/View
+    </div>
+  </Link>
+) : canRegister ? (
+  <button
+    type="button"
+    onClick={() => onRegister?.(eventId)}
+    className={`flex-1 py-1.5 rounded-sm text-[13px] font-medium tracking-widest border-2 transition-all text-black cursor-pointer ${
+      isFull
+        ? 'bg-yellow-400 border-black hover:bg-yellow-300'
+        : 'bg-black text-white border-black hover:bg-orange-600 hover:border-orange-600'
+    }`}
+  >
+    {isFull ? 'Waitlist' : 'Register/View'}
+  </button>
+) : (
+  <Link
+    to={detailLink}
+    className="flex-1 block text-center py-1.5 rounded-sm text-[13px] font-medium tracking-widest border-2 bg-black text-white border-black hover:bg-orange-600 hover:border-orange-600"
+  >
+    View Event
+  </Link>
+)}
+
+
+
                     
                     {/* Add to Calendar button for upcoming events */}
                     {isUpcoming && <CalendarDropdown event={event} />}

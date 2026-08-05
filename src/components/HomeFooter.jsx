@@ -20,7 +20,7 @@ const HomeFooter = () => {
   ];
 
   const otherLinks = [
-    { label: 'NITJ Website', href: 'https://nitj.ac.in' },
+    { label: 'NITA Website', href: 'https://nita.ac.in' },
     { label: 'Contact', href: 'mailto:clubsetu@nikhim.me' },
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
@@ -35,7 +35,7 @@ const HomeFooter = () => {
           {/* Brand column */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src="nitjlogo.png" alt="" className="w-11 h-12" />
+              <img src="nitalogo.png" alt="" className="w-11 h-12" />
               <span className="font-light text-[24px] tracking-wider text-black leading-none select-none logofont">Campus
                 <span className="text-orange-600 font-light tracking-wider">Node</span>
               </span>
