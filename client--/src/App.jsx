@@ -18,7 +18,7 @@ import ClubMembers from "./pages/ClubMembers";
 import EventFeed from "./pages/EventFeed";
 import EventDetails from "./pages/EventDetails";
 import CreateEvent from "./pages/CreateEvent";
-import CheckIn from "./pages/CheckIn";
+
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import RegisterLanding from "./pages/RegisterLanding";
@@ -65,8 +65,8 @@ function App() {
               <Route path="/event/:slug" element={<EventDetails />} />
               <Route path="/create" element={<CreateEvent />} />
               <Route path="/create-event" element={<CreateEvent />} />
-              <Route path="/event/:id/checkin" element={<CheckIn />} />
-              <Route path="/checkin/:id" element={<CheckIn />} />
+             
+            
               <Route path="/event-guidelines" element={<EventGuid />} />
               <Route path="/guidelines" element={<EventGuid />} />
 
