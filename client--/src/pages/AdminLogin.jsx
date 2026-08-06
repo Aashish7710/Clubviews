@@ -16,19 +16,20 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/login`, { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login/admin`, { email, password });
       if (res.data.success) {
+        const adminData = res.data.user || res.data.admin;
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
         }
-        localStorage.setItem('admin', JSON.stringify(res.data.admin));
-        localStorage.setItem('user', JSON.stringify(res.data.admin)); // Set user for standard UI components
-        localStorage.setItem('role', res.data.admin.role);
+        localStorage.setItem('admin', JSON.stringify(adminData));
+        localStorage.setItem('user', JSON.stringify(adminData)); // Set user for standard UI components
+        localStorage.setItem('role', adminData.role || res.data.role);
         showNotification('Welcome back, Admin!', 'success');
         
-        if (res.data.admin.role === 'lostFoundAdmin') {
+        if (adminData.role === 'lostFoundAdmin') {
           navigate('/admin/lost-found');
-        } else if (res.data.admin.role === 'facultyCoordinator') {
+        } else if (adminData.role === 'facultyCoordinator') {
           navigate('/');
         } else {
           navigate('/admin-dashboard');
