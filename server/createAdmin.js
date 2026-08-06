@@ -1,0 +1,50 @@
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import User from "./models/user.js";
+
+dotenv.config();
+
+const createAdmin = async () => {
+  const email = process.argv[2] || "admin@mnnit.ac.in";
+  const password = process.argv[3] || "admin123";
+  const name = process.argv[4] || "Super Admin";
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB Atlas successfully");
+
+    let user = await User.findOne({ email: email.toLowerCase() });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    if (user) {
+      user.role = "admin";
+      user.password = hashedPassword;
+      await user.save();
+      console.log(`Updated existing user (${email}) to role 'admin'!`);
+    } else {
+      user = await User.create({
+        fullName: name,
+        name: name,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        role: "admin",
+      });
+      console.log(`Created new Admin user (${email})!`);
+    }
+
+    console.log("\n====================================");
+    console.log(" ADMIN ACCOUNT READY");
+    console.log(` Email:    ${email}`);
+    console.log(` Password: ${password}`);
+    console.log(" Login URL: /admin-secret-login");
+    console.log("====================================\n");
+
+    process.exit(0);
+  } catch (error) {
+    console.error("Error creating admin:", error.message);
+    process.exit(1);
+  }
+};
+
+createAdmin();
