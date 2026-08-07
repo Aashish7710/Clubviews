@@ -768,14 +768,23 @@ const AdminDashboard = () => {
             <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
 
                 {/* HEADER */}
-                <div className="mb-8">
-                    <h1 className="text-2xl font-black text-black dark:text-white tracking-wide">
-                        {currentTabInfo.title}
-                    </h1>
+                <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl font-black text-black dark:text-white tracking-wide">
+                            {currentTabInfo.title}
+                        </h1>
 
-                    <p className="text-neutral-400 dark:text-neutral-500 text-[12px] mt-0.5 tracking-wide font-medium">
-                        {currentTabInfo.subtitle}
-                    </p>
+                        <p className="text-neutral-400 dark:text-neutral-500 text-[12px] mt-0.5 tracking-wide font-medium">
+                            {currentTabInfo.subtitle}
+                        </p>
+                    </div>
+
+                    <button
+                        onClick={() => navigate('/create-event')}
+                        className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm self-start md:self-auto"
+                    >
+                        + Create New Event
+                    </button>
                 </div>
 
                 {/* OVERVIEW STATS */}
