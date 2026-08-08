@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import dns from "dns";
 import User from "./models/user.js";
 
+import connectDB from "./lib/db.js";
+
 try {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 } catch (err) {}
@@ -16,7 +18,7 @@ const createAdmin = async () => {
   const name = process.argv[4] || "Super Admin";
 
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await connectDB();
     console.log("Connected to MongoDB Atlas successfully");
 
     let user = await User.findOne({ email: email.toLowerCase() });
