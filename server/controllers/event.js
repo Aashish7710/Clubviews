@@ -26,6 +26,7 @@ export const createEvent = async (req, res) => {
     const {
       title,
       description,
+      imageUrl,
       venue,
       startTime,
       endTime,
@@ -57,13 +58,20 @@ export const createEvent = async (req, res) => {
       counter += 1;
     }
 
+    const createdByUserId = req.user
+      ? req.user._id
+      : typeof req.body.createdBy === "string"
+      ? req.body.createdBy
+      : req.body.createdBy?.userId || null;
+
     const event = new Event({
       title,
       description,
+      imageUrl: imageUrl || (Array.isArray(media) && media.find((m) => m.url)?.url) || "",
       venue,
-      startTime,
-      endTime,
-      registrationDeadline: registrationDeadline || null,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      registrationDeadline: registrationDeadline ? new Date(registrationDeadline) : null,
       totalSeats: Number(totalSeats || 0),
       registeredCount: 0,
       entryFee: Number(entryFee || 0),
@@ -83,7 +91,7 @@ export const createEvent = async (req, res) => {
         clubName: clubName || "",
       },
       createdBy: {
-        userId: req.user ? req.user._id : null,
+        userId: createdByUserId ? String(createdByUserId) : "",
         clubName: clubName || "",
       },
     });
@@ -91,10 +99,11 @@ export const createEvent = async (req, res) => {
     await event.save();
     res.status(201).json(event);
   } catch (error) {
+    console.error("Create Event Error:", error);
     if (error.code === 11000 && error.keyValue?.slug) {
       return res.status(400).json({ message: "Event slug already exists." });
     }
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message || "Failed to create event" });
   }
 };
 
@@ -171,5 +180,18 @@ export const registerForEvent = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedEvent = await Event.findByIdAndDelete(id);
+    if (!deletedEvent) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+    res.json({ success: true, message: "Event deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Failed to delete event" });
   }
 };

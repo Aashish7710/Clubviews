@@ -5,6 +5,7 @@ import {
   getEventsForUser,
   registerForEvent,
   createEvent,
+  deleteEvent,
 } from "../controllers/event.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -15,5 +16,6 @@ router.post("/", createEvent);
 router.get("/:slug", getEventBySlug);
 router.get("/user/:userId", verifyToken, getEventsForUser);
 router.post("/:eventId/register", registerForEvent);
+router.delete("/:id", deleteEvent);
 
 export default router;
