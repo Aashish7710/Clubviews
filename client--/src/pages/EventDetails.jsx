@@ -256,6 +256,19 @@ const EventDetails = () => {
     }
   };
 
+  const handleDeleteEvent = async () => {
+    if (!window.confirm(`Are you sure you want to delete "${event?.title}"? This action cannot be undone.`)) {
+      return;
+    }
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${event._id || event.id}`);
+      showNotification('Event deleted successfully', 'success');
+      navigate('/events');
+    } catch (err) {
+      showNotification(err.response?.data?.message || 'Failed to delete event', 'error');
+    }
+  };
+
 
    if (loading) {
     return (
@@ -626,6 +639,15 @@ const EventDetails = () => {
                   >
                     <i className="ri-share-line text-base" /> Share
                   </button>
+
+                  {(localStorage.getItem('role') === 'admin' || user?.role === 'admin') && (
+                    <button
+                      onClick={handleDeleteEvent}
+                      className="sm:w-auto w-full py-2 px-5 text-[12px] font-black uppercase tracking-[0.15em] rounded-lg bg-red-50 text-red-600 border-2 border-red-200 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <i className="ri-delete-bin-line text-base" /> Delete Event
+                    </button>
+                  )}
 
                   {status === 'UPCOMING' && (
                     <div className="flex items-stretch">

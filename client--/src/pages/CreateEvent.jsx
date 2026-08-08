@@ -41,6 +41,22 @@ const CreateEvent = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleImageFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                setError('Image file size should be under 5MB.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData(prev => ({ ...prev, imageUrl: reader.result }));
+                setError('');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleProgramToggle = (prog) => {
         setFormData(prev => {
             const current = prev.allowedPrograms;
@@ -256,11 +272,61 @@ const CreateEvent = () => {
                             value={formData.description} onChange={handleChange} placeholder="Describe your event..." />
                     </div>
 
-                     <div>
-                        <label className={labelCls}>Event Poster URL</label>
-                        <input type="url" name="imageUrl" placeholder="https://example.com/event-image.jpg"
-                            className={inputCls} value={formData.imageUrl} onChange={handleChange} />
-                        {/* <p className="text-xs text-neutral-500 mt-1">Optional: Enter a URL for the event banner image</p> */}
+                    <div>
+                        <label className={labelCls}>Event Poster / Banner Image</label>
+                        <div className="space-y-3">
+                            {/* File Upload Option */}
+                            <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                                <label className="flex-1 cursor-pointer flex items-center justify-center gap-2 border-2 border-dashed border-neutral-300 hover:border-orange-600 bg-neutral-50 px-4 py-3 rounded-sm transition-colors text-xs font-bold text-neutral-700">
+                                    <i className="ri-upload-2-line text-lg text-orange-600" />
+                                    Choose Image File from Folder
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageFileChange}
+                                        className="hidden"
+                                    />
+                                </label>
+                            </div>
+
+                            <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest text-center">OR PASTE URL</p>
+
+                            {/* Image URL Input */}
+                            <input
+                                type="url"
+                                name="imageUrl"
+                                placeholder="https://example.com/event-image.jpg"
+                                className={inputCls}
+                                value={formData.imageUrl}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        {/* Image Preview */}
+                        {formData.imageUrl && (
+                            <div className="mt-4 relative w-48 aspect-[4/5] rounded-lg overflow-hidden border-2 border-neutral-200 group">
+                                <img
+                                    src={formData.imageUrl}
+                                    alt="Event Poster Preview"
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/CLUBSETU.png";
+                                    }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData(prev => ({ ...prev, imageUrl: '' }))}
+                                    className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full text-xs hover:bg-red-700 transition-colors shadow-md cursor-pointer"
+                                    title="Remove Image"
+                                >
+                                    <i className="ri-close-line" />
+                                </button>
+                                <span className="absolute bottom-2 left-2 bg-black/70 text-white text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded">
+                                    Selected Image
+                                </span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Venue */}

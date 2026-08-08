@@ -20,26 +20,26 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
         : `${totalSeats-registeredCount} left`;
 
     const DEFAULT_IMAGE = '/CLUBSETU.png';
-    const displayImage = event.imageUrl || DEFAULT_IMAGE;
+    const displayImage = event.imageUrl || (Array.isArray(event.media) && event.media.find(m => m?.url)?.url) || DEFAULT_IMAGE;
     
     const eventId = event.id || _id;
     const detailLink = `/event/${slug || eventId}`;
     const canRegister = !isEnded && !isLive;
 
     return (
-        <div className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden transition-all hover:-translate-y-0.5 flex flex-col h-full group">
+        <div className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden transition-all hover:-translate-y-0.5 flex flex-col h-full group cursor-pointer">
 
             {/* Image */}
-            <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-200 border-b-2 border-gray-200">
+            <Link to={detailLink} className="relative w-full aspect-[4/5] overflow-hidden bg-slate-200 border-b-2 border-gray-200 block">
                 <img
-  src={displayImage}
-  alt={title}
-  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-  onError={(e) => {
-    e.target.onerror = null; // prevent infinite loop
-    e.target.src = "/CLUBSETU.png"; // fallback image
-  }}
-/>
+                  src={displayImage}
+                  alt={title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null; // prevent infinite loop
+                    e.target.src = "/CLUBSETU.png"; // fallback image
+                  }}
+                />
 
                 {/* Status Badge */}
                 <div className="absolute top-3 left-3">
@@ -60,11 +60,13 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
                         </span>
                     )}
                 </div>
-            </div>
+            </Link>
 
             {/* Body */}
             <div className="p-3 flex flex-auto flex-col">
-                <h3 className="text-lg font-black text-black leading-tight mb-2 line-clamp-1">{title}</h3>
+                <Link to={detailLink} className="hover:text-orange-600 transition-colors">
+                    <h3 className="text-lg font-black text-black leading-tight mb-2 line-clamp-1 hover:text-orange-600">{title}</h3>
+                </Link>
                 {/* <p className="text-[13px] text-neutral-500 mb-4 line-clamp-2 leading-relaxed">{description}</p> */}
 
                 {/* Info row */}
@@ -195,29 +197,21 @@ const EventCard = ({ event, onRegister, isRegistered }) => {
 
 
 {isRegistered ? (
-  <Link to={detailLink}>
-    <div className="flex-1 block text-center py-2 bg-green-50 text-green-700 border-2 border-green-300 rounded-sm text-[11px] font-bold uppercase tracking-widest cursor-pointer">
-      ✓ Registered/View
+  <Link to={detailLink} className="flex-1">
+    <div className="block text-center py-2 bg-green-50 text-green-700 border-2 border-green-300 rounded-sm text-[11px] font-bold uppercase tracking-widest cursor-pointer">
+      ✓ Registered / View
     </div>
   </Link>
-) : canRegister ? (
-  <button
-    type="button"
-    onClick={() => onRegister?.(eventId)}
-    className={`flex-1 py-1.5 rounded-sm text-[13px] font-medium tracking-widest border-2 transition-all text-black cursor-pointer ${
-      isFull
-        ? 'bg-yellow-400 border-black hover:bg-yellow-300'
-        : 'bg-black text-white border-black hover:bg-orange-600 hover:border-orange-600'
-    }`}
-  >
-    {isFull ? 'Waitlist' : 'Register/View'}
-  </button>
 ) : (
   <Link
     to={detailLink}
-    className="flex-1 block text-center py-1.5 rounded-sm text-[13px] font-medium tracking-widest border-2 bg-black text-white border-black hover:bg-orange-600 hover:border-orange-600"
+    className={`flex-1 block text-center py-1.5 rounded-sm text-[13px] font-medium tracking-widest border-2 transition-all cursor-pointer ${
+      isFull
+        ? 'bg-yellow-400 text-black border-black hover:bg-yellow-300'
+        : 'bg-black text-white border-black hover:bg-orange-600 hover:border-orange-600'
+    }`}
   >
-    View Event
+    {isFull ? 'Waitlist' : 'View Event'}
   </Link>
 )}
 
