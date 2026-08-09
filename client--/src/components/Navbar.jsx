@@ -481,6 +481,12 @@ const Navbar = () => {
                             >
                               <LayoutGridIcon size={16} className="text-neutral-500" /> Admin Panel
                             </Link>
+                            <Link
+                              to="/admin-dashboard?tab=club-heads"
+                              className="flex items-center gap-2.5 px-4 py-1.5 text-[12px] text-black hover:bg-neutral-100 transition-colors"
+                            >
+                              <LayoutGridIcon size={16} className="text-neutral-500" /> Create / Manage Clubs
+                            </Link>
                           </div>
                         )}
                       </div>

@@ -779,12 +779,60 @@ const AdminDashboard = () => {
                         </p>
                     </div>
 
-                    <button
-                        onClick={() => navigate('/create-event')}
-                        className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm self-start md:self-auto"
-                    >
-                        + Create New Event
-                    </button>
+                    <div className="flex items-center gap-3 self-start md:self-auto">
+                        <button
+                            onClick={() => {
+                                setActiveTab('club-heads');
+                                navigate('/admin-dashboard?tab=club-heads', { replace: true });
+                            }}
+                            className={`px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm ${
+                                activeTab === 'club-heads'
+                                    ? 'bg-black text-white dark:bg-white dark:text-black'
+                                    : 'bg-neutral-100 hover:bg-neutral-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-black dark:text-white'
+                            }`}
+                        >
+                            + Create Club
+                        </button>
+
+                        <button
+                            onClick={() => navigate('/create-event')}
+                            className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+                        >
+                            + Create New Event
+                        </button>
+                    </div>
+                </div>
+
+                {/* NAVIGATION TABS */}
+                <div className="flex items-center gap-2 border-b border-neutral-200 dark:border-zinc-800 mb-8 overflow-x-auto pb-2 scrollbar-none">
+                    {[
+                        { id: 'overview', label: 'Overview' },
+                        { id: 'club-heads', label: 'Manage Clubs' },
+                        { id: 'coordinators', label: 'Coordinators' },
+                        ...(role === 'admin' || role === 'paymentAdmin'
+                            ? [
+                                  { id: 'payouts', label: 'Payouts' },
+                                  { id: 'payments-overview', label: 'Payments Management' }
+                              ]
+                            : []),
+                        { id: 'event-data', label: 'Event Data' },
+                        { id: 'profile', label: 'Profile Settings' }
+                    ].map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => {
+                                setActiveTab(tab.id);
+                                navigate(`/admin-dashboard?tab=${tab.id}`, { replace: true });
+                            }}
+                            className={`px-4 py-2.5 text-xs font-bold whitespace-nowrap rounded-lg transition-all cursor-pointer ${
+                                activeTab === tab.id
+                                    ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm'
+                                    : 'text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-zinc-900'
+                            }`}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
                 </div>
 
                 {/* OVERVIEW STATS */}
