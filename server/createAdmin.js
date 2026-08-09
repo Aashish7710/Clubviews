@@ -6,10 +6,17 @@ import User from "./models/user.js";
 
 import connectDB from "./lib/db.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 try {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 } catch (err) {}
 
+dotenv.config({ path: path.join(__dirname, ".env") });
 dotenv.config();
 
 const createAdmin = async () => {
