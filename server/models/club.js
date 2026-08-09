@@ -7,6 +7,9 @@ const clubSchema = new mongoose.Schema(
     category: { type: String, default: "Student Club" },
     description: { type: String, default: "" },
     clubLogo: { type: String, default: "" },
+    facultyName: { type: String, default: "" },
+    facultyEmail: { type: String, default: "" },
+    clubEmail: { type: String, default: "" },
 
     // Faculty advisors — array of { name, email }
     facultyCoordinators: [

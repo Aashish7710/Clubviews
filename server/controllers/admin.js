@@ -84,6 +84,9 @@ export const createClub = async (req, res) => {
       category,
       description,
       clubLogo,
+      facultyName,
+      facultyEmail,
+      clubEmail,
       facultyCoordinators,
       studentCoordinators,
       socialLinks,
@@ -110,13 +113,21 @@ export const createClub = async (req, res) => {
       return [];
     };
 
+    let parsedFaculty = parseSafe(facultyCoordinators);
+    if (parsedFaculty.length === 0 && (facultyName || facultyEmail)) {
+      parsedFaculty = [{ name: facultyName || "", email: facultyEmail || "" }];
+    }
+
     const club = await Club.create({
       clubName,
       slug,
       category: category || "Student Club",
       description: description || "",
       clubLogo: clubLogo || "",
-      facultyCoordinators: parseSafe(facultyCoordinators),
+      facultyName: facultyName || "",
+      facultyEmail: facultyEmail || "",
+      clubEmail: clubEmail || "",
+      facultyCoordinators: parsedFaculty,
       studentCoordinators: parseSafe(studentCoordinators),
       socialLinks: parseSafe(socialLinks),
     });
@@ -142,6 +153,9 @@ export const updateClub = async (req, res) => {
       category,
       description,
       clubLogo,
+      facultyName,
+      facultyEmail,
+      clubEmail,
       facultyCoordinators,
       studentCoordinators,
       socialLinks,
@@ -169,6 +183,9 @@ export const updateClub = async (req, res) => {
     if (category !== undefined) club.category = category;
     if (description !== undefined) club.description = description;
     if (clubLogo !== undefined) club.clubLogo = clubLogo;
+    if (facultyName !== undefined) club.facultyName = facultyName;
+    if (facultyEmail !== undefined) club.facultyEmail = facultyEmail;
+    if (clubEmail !== undefined) club.clubEmail = clubEmail;
     if (isActive !== undefined) club.isActive = Boolean(isActive);
 
     const fc = parseSafe(facultyCoordinators);
