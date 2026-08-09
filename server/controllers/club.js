@@ -27,9 +27,31 @@ export const getClubBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const club = mongoose.Types.ObjectId.isValid(slug)
-      ? await Club.findById(slug)
-      : await Club.findOne({ slug });
+    let club = null;
+
+    if (mongoose.Types.ObjectId.isValid(slug)) {
+      club = await Club.findById(slug);
+    }
+
+    if (!club) {
+      club = await Club.findOne({ slug });
+    }
+
+    // Smart fallback matching for typos or slight variations in slug
+    if (!club && slug) {
+      const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const allClubs = await Club.find();
+      club = allClubs.find((c) => {
+        const cSlugClean = (c.slug || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        const cNameClean = (c.clubName || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        return (
+          cSlugClean === cleanSlug ||
+          cNameClean === cleanSlug ||
+          cSlugClean.startsWith(cleanSlug) ||
+          cleanSlug.startsWith(cSlugClean)
+        );
+      });
+    }
 
     if (!club) {
       return res.status(404).json({ message: "Club not found" });
