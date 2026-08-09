@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../context/NotificationContext';
 import { Eye, EyeOff } from 'lucide-react';
+import { API_URL } from '../config/api';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login/admin`, { email, password });
+      const res = await axios.post(`${API_URL}/api/auth/login/admin`, { email, password });
       if (res.data.success) {
         const adminData = res.data.user || res.data.admin;
         if (res.data.token) {

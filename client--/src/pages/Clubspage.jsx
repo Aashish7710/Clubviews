@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_URL } from "../config/api";
 import { Link } from "react-router-dom";
 import { ArrowUpRightIcon } from "@/components/ui/arrow-up-right";
 import { InstagramIcon } from "@/components/ui/instagram";
@@ -19,7 +20,7 @@ const ClubsPage = ({ isHome = false }) => {
     const fetchClubs = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/clubs`,
+          `${API_URL}/api/clubs`,
         );
         setClubs(Array.isArray(res.data) ? res.data : []);
       } catch (err) {

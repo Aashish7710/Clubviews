@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNotification } from '../context/NotificationContext';
+import { API_URL } from '../config/api';
 import { loadRazorpay } from '../utils/razorpay';
 import CalendarDropdown from '../components/CalendarDropdown';
 
@@ -28,7 +29,7 @@ const EventDetails = () => {
    useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/${slug}`);
+        const res = await axios.get(`${API_URL}/api/events/${slug}`);
         setEvent(res.data);
         if (res.data.entryFee > 0) loadRazorpay();
         setLoading(false);
@@ -88,14 +89,14 @@ const EventDetails = () => {
       if (event.entryFee > 0) {
         try {
           await loadRazorpay();
-          const orderRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
+          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
           const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
           const options = {
             key: keyId, amount: amount * 100, currency, name: 'CampusNode',
             description: `Registration for ${eventTitle}`, order_id: orderId,
             handler: async (response) => {
               try {
-                const verifyRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event.id || event._id, studentId: user.id });
+                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event.id || event._id, studentId: user.id });
                 if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setTimeout(() => navigate('/my-events'), 1500); }
               } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
             },
@@ -110,7 +111,7 @@ const EventDetails = () => {
       }
       setIsRegistering(true);
       try {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id });
+        const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id });
         if (res.data.status === 'WAITLISTED') {
           showNotification('You have been added to the waitlist.', 'info');
         } else if (res.data.status === 'REGISTERED') {
@@ -137,7 +138,7 @@ const EventDetails = () => {
       }
       setIsRegistering(true);
       try {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/events/${event.id || event._id}/register`, { externalEmail, externalName });
+        const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { externalEmail, externalName });
         if (res.data.status === 'WAITLISTED') {
           showNotification('You have been added to the waitlist.', 'info');
         } else if (res.data.status === 'REGISTERED') {
@@ -166,7 +167,7 @@ const EventDetails = () => {
     const role = localStorage.getItem('role');
     setIsRegistering(true);
     try {
-      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/${role}/${user.id}`, modalInputs);
+      const res = await axios.put(`${API_URL}/api/users/${role}/${user.id}`, modalInputs);
       const updatedUser = res.data.user;
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setMissingFieldsModalOpen(false);
@@ -175,14 +176,14 @@ const EventDetails = () => {
       if (event.entryFee > 0) {
         try {
           await loadRazorpay();
-          const orderRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, { eventId: event._id, studentId: updatedUser.id });
+          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event._id, studentId: updatedUser.id });
           const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
           const options = {
             key: keyId, amount: amount * 100, currency, name: 'CampusNode',
             description: `Registration for ${eventTitle}`, order_id: orderId,
             handler: async (response) => {
               try {
-                const verifyRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: updatedUser.id });
+                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: updatedUser.id });
                 if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setTimeout(() => navigate('/my-events'), 1500); }
               } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
             },
@@ -194,7 +195,7 @@ const EventDetails = () => {
         } catch (err) { showNotification(err.response?.data?.message || 'Failed to initiate payment', 'error'); }
         return;
       }
-      const regRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/events/${event.id || event._id}/register`, { studentId: updatedUser.id });
+      const regRes = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: updatedUser.id });
       showNotification(regRes.data.message, 'success');
       setTimeout(() => navigate('/my-events'), 1500);
     } catch (err) { showNotification(err.response?.data?.message || 'Failed to update profile', 'error'); }
@@ -217,14 +218,14 @@ const EventDetails = () => {
      if (event.entryFee > 0) {
       try {
         await loadRazorpay();
-        const orderRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
+        const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
         const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
         const options = {
           key: keyId, amount: amount * 100, currency, name: 'CampusNode',
           description: `Registration for ${eventTitle}`, order_id: orderId,
           handler: async (response) => {
             try {
-              const verifyRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: user.id, formResponses: customFormResponses });
+              const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: user.id, formResponses: customFormResponses });
               if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setCustomFormModalOpen(false); setTimeout(() => navigate('/my-events'), 1500); }
             } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
           },
@@ -239,7 +240,7 @@ const EventDetails = () => {
 
 
       try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id, formResponses: customFormResponses });
+      const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id, formResponses: customFormResponses });
       showNotification(res.data.message, 'success');
       setCustomFormModalOpen(false);
       setTimeout(() => navigate('/my-events'), 1500);
@@ -261,7 +262,7 @@ const EventDetails = () => {
       return;
     }
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${event._id || event.id}`);
+      await axios.delete(`${API_URL}/api/events/${event._id || event.id}`);
       showNotification('Event deleted successfully', 'success');
       navigate('/events');
     } catch (err) {

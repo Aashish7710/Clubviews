@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../config/api";
 
 
 // Static pages that are always searchable

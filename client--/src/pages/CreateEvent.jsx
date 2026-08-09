@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import { EVENT_VENUES } from '../constants/eventVanues';
 import { PROGRAM_LABELS, PROGRAM_OPTIONS } from '../constants/programs';
@@ -223,7 +224,7 @@ const CreateEvent = () => {
         };
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/events`, payload);
+            const res = await axios.post(`${API_URL}/api/events`, payload);
             navigate(`/event/${res.data.slug}`);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to create event');

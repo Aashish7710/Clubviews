@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 import EventCard from '../components/EventCard';
 import { useNotification } from '../context/NotificationContext';
 import { Link } from 'react-router-dom';
@@ -22,11 +23,11 @@ const EventFeed = ({ limit, hideHeader = false, showFilters = false, onlyActive 
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/events`);
+      const res = await axios.get(`${API_URL}/api/events`);
       setEvents(Array.isArray(res.data) ? res.data : []);
       const role = localStorage.getItem('role');
       if (user && role === 'member') {
-        const regRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/user/${user.id || user._id}`);
+        const regRes = await axios.get(`${API_URL}/api/events/user/${user.id || user._id}`);
         setRegisteredEvents(regRes.data.filter(r => r.eventId).map(r => r.eventId.id || r.eventId._id));
       }
       setLoading(false);
@@ -99,7 +100,7 @@ const EventFeed = ({ limit, hideHeader = false, showFilters = false, onlyActive 
     }
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/events/${eventId}/register`, {
+      const res = await axios.post(`${API_URL}/api/events/${eventId}/register`, {
         userId: user.id || user._id
       });
       showNotification(res.data.message, 'success');

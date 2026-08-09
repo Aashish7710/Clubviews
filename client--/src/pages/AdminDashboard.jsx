@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useNotification } from '../context/NotificationContext';
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from '../config/api';
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState(null);

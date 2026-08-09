@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Users, Calendar, User, ShieldCheck, X, Sun, Moon, Package } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import axios from "axios";
+import { API_URL } from "../config/api";
 import { CalendarDaysIcon } from "./ui/calendar-days";
 import { IndianRupeeIcon } from "./ui/indian-rupee";
 import { ConciergeBellIcon } from "./ui/concierge-bell";
@@ -61,7 +62,6 @@ const BottomNav = () => {
         };
     }, [drawerOpen]);
 
-    const API_URL = import.meta.env.VITE_API_URL;
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("admin");

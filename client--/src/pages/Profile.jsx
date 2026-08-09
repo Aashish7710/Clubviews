@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -16,7 +17,7 @@ const Profile = () => {
             setRole(storedRole);
 
             if (storedRole === 'club' && storedUser.clubId) {
-                axios.get(`${import.meta.env.VITE_API_URL}/api/clubs/${storedUser.clubId}`)
+                axios.get(`${API_URL}/api/clubs/${storedUser.clubId}`)
                     .then(res => {
                         const club = res.data.club;
                         if (club && (club.description || club.clubLogo || club.category)) {

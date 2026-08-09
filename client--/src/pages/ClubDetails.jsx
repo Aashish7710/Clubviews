@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config/api";
 import { InstagramIcon } from "@/components/ui/instagram";
 import { LinkedinIcon } from "@/components/ui/linkedin";
 import { TwitterIcon } from "@/components/ui/twitter";
@@ -26,7 +27,7 @@ const ClubDetails = () => {
       if (!clubIdentifier) return;
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/clubs/${clubIdentifier}`
+          `${API_URL}/api/clubs/${clubIdentifier}`
         );
         setClub(res.data.club);
         setEvents(res.data.events);
@@ -39,7 +40,7 @@ const ClubDetails = () => {
           const clubId = res.data.club._id || res.data.club.id;
           try {
             const membersRes = await axios.get(
-              `${import.meta.env.VITE_API_URL}/api/club-members/${clubId}/members`
+              `${API_URL}/api/club-members/${clubId}/members`
             );
             const membership = membersRes.data.find(
               (m) => m.studentId === storedUser.id || m.student?.id === storedUser.id
@@ -89,7 +90,7 @@ const ClubDetails = () => {
   const handleDeleteClub = async () => {
     if (!window.confirm(`Are you sure you want to delete "${club.clubName}"? This action cannot be undone.`)) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/clubs/${club._id || club.id}`);
+      await axios.delete(`${API_URL}/api/clubs/${club._id || club.id}`);
       window.location.href = '/clubs';
     } catch (err) {
       console.error("Failed to delete club:", err);

@@ -14,7 +14,7 @@ import { CalendarCogIcon } from "./ui/calendar-cog";
 import { LayoutGridIcon } from "./ui/layout-grid";
 import LogInIcon from "./ui/login";
 import SearchBar from "./SearchBar";
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../config/api";
 
 
 const Navbar = () => {

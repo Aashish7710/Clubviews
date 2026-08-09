@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 import { Link } from 'react-router-dom';
 import { ArrowUpRightIcon } from './ui/arrow-up-right';
 
@@ -12,8 +13,8 @@ const ClubLeaderboard = () => {
         const fetchData = async () => {
             try {
                 const [clubsRes, eventsRes] = await Promise.all([
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/clubs`),
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/events`)
+                    axios.get(`${API_URL}/api/clubs`),
+                    axios.get(`${API_URL}/api/events`)
                 ]);
                 setClubs(Array.isArray(clubsRes.data) ? clubsRes.data : []);
                 setEvents(Array.isArray(eventsRes.data) ? eventsRes.data : []);

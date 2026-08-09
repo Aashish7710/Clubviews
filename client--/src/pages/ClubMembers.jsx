@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNotification } from "../context/NotificationContext";
 import { ClubMemberRole } from "../types/index.js";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../config/api";
 
 // ── Avatar ─────────────────────────────────────────────────────────────────────
 const Avatar = ({ name }) => {
