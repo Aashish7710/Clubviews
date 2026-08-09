@@ -55,9 +55,11 @@ function App() {
 
               {/* Clubs */}
               <Route path="/clubs" element={<ClubsPage />} />
+              <Route path="/club/:slug" element={<ClubDetails />} />
               <Route path="/club/:id" element={<ClubDetails />} />
               <Route path="/club/:clubId/team" element={<ClubMembers />} />
               <Route path="/club/:clubId/members" element={<ClubMembers />} />
+              <Route path="/club/edit/:slug" element={<ClubDetails />} />
               <Route path="/club/edit/:id" element={<ClubDetails />} />
 
               {/* Events */}

@@ -11,7 +11,8 @@ import { EarthIcon } from "@/components/ui/earth";
 import { ClubMemberRole } from "../types/index.js";
 
 const ClubDetails = () => {
-  const { slug } = useParams();
+  const { id, slug } = useParams();
+  const clubIdentifier = slug || id;
   const [club, setClub] = useState(null);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,9 +23,10 @@ const ClubDetails = () => {
 
    useEffect(() => {
     const fetchClubDetails = async () => {
+      if (!clubIdentifier) return;
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/clubs/${slug}`
+          `${import.meta.env.VITE_API_URL}/api/clubs/${clubIdentifier}`
         );
         setClub(res.data.club);
         setEvents(res.data.events);
@@ -55,7 +57,7 @@ const ClubDetails = () => {
       }
     };
     fetchClubDetails();
-  }, [slug]);
+  }, [clubIdentifier, id, slug]);
 
     if (loading)
     return (
