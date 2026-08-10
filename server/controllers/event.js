@@ -1,6 +1,7 @@
 import Event from "../models/event.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
+import { sendEventRegistrationEmail } from "../utils/emailService.js";
 
 const slugify = (text) =>
   text
@@ -170,6 +171,46 @@ export const registerForEvent = async (req, res) => {
     }
 
     await event.save();
+
+    // Determine recipient email and name for confirmation notification
+    let recipientEmail = externalEmail || null;
+    let recipientName = externalName || "Attendee";
+
+    const targetUserId = studentId || req.user?._id || req.user?.id;
+    if (targetUserId) {
+      try {
+        const user = await User.findById(targetUserId);
+        if (user) {
+          recipientEmail = recipientEmail || user.email;
+          recipientName = user.fullName || user.name || recipientName;
+        }
+      } catch (userErr) {
+        console.warn("Could not fetch user details for email notification:", userErr.message);
+      }
+    }
+
+    // Trigger email sending asynchronously (non-blocking call)
+    if (recipientEmail) {
+      Event.findById(eventId)
+        .populate("club")
+        .then((populatedEvent) => {
+          sendEventRegistrationEmail({
+            recipientEmail,
+            recipientName,
+            event: populatedEvent || event,
+            registrationStatus: status,
+          });
+        })
+        .catch((err) => {
+          console.error("Error populating event for registration email:", err);
+          sendEventRegistrationEmail({
+            recipientEmail,
+            recipientName,
+            event,
+            registrationStatus: status,
+          });
+        });
+    }
 
     return res.json({
       status,
