@@ -13,6 +13,38 @@ const slugify = (text) =>
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const parseArrayField = (field) => {
+  if (!field) return [];
+  let parsed = field;
+  if (typeof parsed === "string") {
+    try {
+      parsed = JSON.parse(parsed);
+    } catch (e) {
+      return [];
+    }
+  }
+  if (Array.isArray(parsed)) {
+    if (parsed.length === 1 && typeof parsed[0] === "string" && parsed[0].trim().startsWith("[")) {
+      try {
+        parsed = JSON.parse(parsed[0]);
+      } catch (e) {}
+    }
+    if (Array.isArray(parsed)) {
+      return parsed.map((item) => {
+        if (typeof item === "string" && (item.trim().startsWith("{") || item.trim().startsWith("["))) {
+          try {
+            return JSON.parse(item);
+          } catch (e) {
+            return item;
+          }
+        }
+        return item;
+      });
+    }
+  }
+  return [];
+};
+
 export const getAllEvents = async (req, res) => {
   try {
     const events = await Event.find().sort({ startTime: 1 });
@@ -65,26 +97,39 @@ export const createEvent = async (req, res) => {
       ? req.body.createdBy
       : req.body.createdBy?.userId || null;
 
+    const parsedCustomFields = parseArrayField(customFields);
+    const parsedSponsors = parseArrayField(sponsors);
+    const parsedMedia = parseArrayField(media);
+    const parsedRequiredFields = parseArrayField(requiredFields);
+    const parsedAllowedPrograms = parseArrayField(allowedPrograms);
+    const parsedAllowedYears = parseArrayField(allowedYears);
+
+    const parsedStartTime = startTime && !isNaN(new Date(startTime).getTime()) ? new Date(startTime) : new Date();
+    const parsedEndTime = endTime && !isNaN(new Date(endTime).getTime()) ? new Date(endTime) : new Date();
+    const parsedDeadline = registrationDeadline && !isNaN(new Date(registrationDeadline).getTime())
+      ? new Date(registrationDeadline)
+      : null;
+
     const event = new Event({
       title,
       description,
-      imageUrl: imageUrl || (Array.isArray(media) && media.find((m) => m.url)?.url) || "",
+      imageUrl: imageUrl || (Array.isArray(parsedMedia) && parsedMedia.find((m) => m.url)?.url) || "",
       venue,
-      startTime: new Date(startTime),
-      endTime: new Date(endTime),
-      registrationDeadline: registrationDeadline ? new Date(registrationDeadline) : null,
+      startTime: parsedStartTime,
+      endTime: parsedEndTime,
+      registrationDeadline: parsedDeadline,
       totalSeats: Number(totalSeats || 0),
       registeredCount: 0,
       entryFee: Number(entryFee || 0),
       status: status || "UPCOMING",
       showWinner: Boolean(showWinner),
       winners: [],
-      sponsors: Array.isArray(sponsors) ? sponsors : [],
-      media: Array.isArray(media) ? media : [],
-      requiredFields: Array.isArray(requiredFields) ? requiredFields : [],
-      customFields: Array.isArray(customFields) ? customFields : [],
-      allowedPrograms: Array.isArray(allowedPrograms) ? allowedPrograms : ["BTECH", "MTECH", "OTHER"],
-      allowedYears: Array.isArray(allowedYears) ? allowedYears : [],
+      sponsors: parsedSponsors,
+      media: parsedMedia,
+      requiredFields: parsedRequiredFields,
+      customFields: parsedCustomFields,
+      allowedPrograms: parsedAllowedPrograms.length > 0 ? parsedAllowedPrograms : ["BTECH", "MTECH", "OTHER"],
+      allowedYears: parsedAllowedYears,
       provideCertificate: Boolean(provideCertificate),
       slug,
       club: {

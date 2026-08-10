@@ -72,7 +72,8 @@ const EventDetails = () => {
     const role = localStorage.getItem('role');
 
     // Authenticated path
-    if (user && role === 'member') {
+    if (user && (role === 'student' || role === 'member' || !role || role === 'user')) {
+      const studentId = user._id || user.id;
       if (event.requiredFields && event.requiredFields.length > 0) {
         const missing = event.requiredFields.filter(field => !user[field]);
         if (missing.length > 0) {
@@ -89,18 +90,18 @@ const EventDetails = () => {
       if (event.entryFee > 0) {
         try {
           await loadRazorpay();
-          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
+          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId });
           const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
           const options = {
             key: keyId, amount: amount * 100, currency, name: 'CampusNode',
             description: `Registration for ${eventTitle}`, order_id: orderId,
             handler: async (response) => {
               try {
-                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event.id || event._id, studentId: user.id });
+                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event.id || event._id, studentId });
                 if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setTimeout(() => navigate('/my-events'), 1500); }
               } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
             },
-            prefill: { name: user.name, email: user.email, contact: user.phone || '' },
+            prefill: { name: user.name || user.fullName, email: user.email, contact: user.phone || '' },
             theme: { color: '#EA580C' },
             modal: { ondismiss: () => showNotification('Payment cancelled', 'info') }
           };
@@ -111,7 +112,7 @@ const EventDetails = () => {
       }
       setIsRegistering(true);
       try {
-        const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id });
+        const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId });
         if (res.data.status === 'WAITLISTED') {
           showNotification('You have been added to the waitlist.', 'info');
         } else if (res.data.status === 'REGISTERED') {
@@ -165,29 +166,31 @@ const EventDetails = () => {
   const handleSaveAndRegister = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const role = localStorage.getItem('role');
+    const studentId = user?._id || user?.id;
     setIsRegistering(true);
     try {
-      const res = await axios.put(`${API_URL}/api/users/${role}/${user.id}`, modalInputs);
+      const res = await axios.put(`${API_URL}/api/users/${role}/${studentId}`, modalInputs);
       const updatedUser = res.data.user;
       localStorage.setItem('user', JSON.stringify(updatedUser));
+      const updatedStudentId = updatedUser?._id || updatedUser?.id;
       setMissingFieldsModalOpen(false);
       showNotification('Profile updated successfully!', 'success');
       if (event.customFields && event.customFields.length > 0) { setCustomFormResponses({}); setCustomFormModalOpen(true); return; }
       if (event.entryFee > 0) {
         try {
           await loadRazorpay();
-          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event._id, studentId: updatedUser.id });
+          const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event._id, studentId: updatedStudentId });
           const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
           const options = {
             key: keyId, amount: amount * 100, currency, name: 'CampusNode',
             description: `Registration for ${eventTitle}`, order_id: orderId,
             handler: async (response) => {
               try {
-                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: updatedUser.id });
+                const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: updatedStudentId });
                 if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setTimeout(() => navigate('/my-events'), 1500); }
               } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
             },
-            prefill: { name: updatedUser.name, email: updatedUser.email, contact: updatedUser.phone || '' },
+            prefill: { name: updatedUser.name || updatedUser.fullName, email: updatedUser.email, contact: updatedUser.phone || '' },
             theme: { color: '#EA580C' }
           };
           const rzp = new window.Razorpay(options);
@@ -195,7 +198,7 @@ const EventDetails = () => {
         } catch (err) { showNotification(err.response?.data?.message || 'Failed to initiate payment', 'error'); }
         return;
       }
-      const regRes = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: updatedUser.id });
+      const regRes = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: updatedStudentId });
       showNotification(regRes.data.message, 'success');
       setTimeout(() => navigate('/my-events'), 1500);
     } catch (err) { showNotification(err.response?.data?.message || 'Failed to update profile', 'error'); }
@@ -204,6 +207,7 @@ const EventDetails = () => {
 
   const handleCustomFormSubmit = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
+    const studentId = user?._id || user?.id;
     setIsRegistering(true);
     if (event.customFields) {
       for (const field of event.customFields) {
@@ -218,18 +222,18 @@ const EventDetails = () => {
      if (event.entryFee > 0) {
       try {
         await loadRazorpay();
-        const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId: user.id });
+        const orderRes = await axios.post(`${API_URL}/api/payment/create-order`, { eventId: event.id || event._id, studentId });
         const { orderId, amount, currency, keyId, eventTitle } = orderRes.data;
         const options = {
           key: keyId, amount: amount * 100, currency, name: 'CampusNode',
           description: `Registration for ${eventTitle}`, order_id: orderId,
           handler: async (response) => {
             try {
-              const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId: user.id, formResponses: customFormResponses });
+              const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, { orderId, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature, eventId: event._id, studentId, formResponses: customFormResponses });
               if (verifyRes.data.success) { showNotification(`Successfully registered for ${eventTitle}!`, 'success'); setCustomFormModalOpen(false); setTimeout(() => navigate('/my-events'), 1500); }
             } catch (err) { showNotification(err.response?.data?.message || 'Payment verification failed', 'error'); }
           },
-          prefill: { name: user.name, email: user.email, contact: user.phone || '' },
+          prefill: { name: user.name || user.fullName, email: user.email, contact: user.phone || '' },
           theme: { color: '#EA580C' }
         };
         const rzp = new window.Razorpay(options);
@@ -240,7 +244,7 @@ const EventDetails = () => {
 
 
       try {
-      const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId: user.id, formResponses: customFormResponses });
+      const res = await axios.post(`${API_URL}/api/events/${event.id || event._id}/register`, { studentId, formResponses: customFormResponses });
       showNotification(res.data.message, 'success');
       setCustomFormModalOpen(false);
       setTimeout(() => navigate('/my-events'), 1500);

@@ -1,5 +1,5 @@
 import express from "express";
-import { register, login, logout, verify2FA, getMe, forgotPassword } from "../controllers/auth.js";
+import { register, login, logout, verify2FA, getMe, forgotPassword, updateProfile } from "../controllers/auth.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -19,8 +19,11 @@ router.post("/forgot-password", forgotPassword);
 // 2FA verification
 router.post("/verify-2fa", verify2FA);
 
-// Profile endpoint
+// Profile endpoints
 router.get("/me", verifyToken, getMe);
+router.put("/profile/:userId", updateProfile);
+router.put("/:role/:userId", updateProfile);
+router.put("/:userId", updateProfile);
 
 // Logout endpoint
 router.post("/logout", logout);

@@ -57,6 +57,7 @@ connectDB().catch((err) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/users", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/clubs", clubRoutes);
 app.use("/api/admin", adminRoutes);

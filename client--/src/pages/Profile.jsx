@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../config/api';
 
 const Profile = () => {
+    const location = useLocation();
     const [user, setUser] = useState(null);
     const [role, setRole] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isClubAdded, setIsClubAdded] = useState(false);
+
+    // Registered Events state
+    const [registeredEvents, setRegisteredEvents] = useState([]);
+    const [eventsLoading, setEventsLoading] = useState(false);
+    const [eventsFetched, setEventsFetched] = useState(false);
+    const eventsSectionRef = useRef(null);
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -15,6 +22,22 @@ const Profile = () => {
         if (storedUser) {
             setUser(storedUser);
             setRole(storedRole);
+
+            const userId = storedUser._id || storedUser.id;
+            if (userId) {
+                setEventsLoading(true);
+                axios.get(`${API_URL}/api/events/user/${userId}`)
+                    .then(res => {
+                        setRegisteredEvents(Array.isArray(res.data) ? res.data : []);
+                    })
+                    .catch(err => {
+                        console.error("Error fetching registered events:", err);
+                    })
+                    .finally(() => {
+                        setEventsLoading(false);
+                        setEventsFetched(true);
+                    });
+            }
 
             if (storedRole === 'club' && storedUser.clubId) {
                 axios.get(`${API_URL}/api/clubs/${storedUser.clubId}`)
@@ -32,6 +55,21 @@ const Profile = () => {
         setLoading(false);
     }, []);
 
+    // Auto-scroll to events section if URL is /my-events
+    useEffect(() => {
+        if (location.pathname === '/my-events' && eventsSectionRef.current) {
+            setTimeout(() => {
+                eventsSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+    }, [location.pathname, eventsFetched]);
+
+    const scrollToEvents = () => {
+        if (eventsSectionRef.current) {
+            eventsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     if (!user) return <div className="text-center mt-10">Please login to view profile.</div>;
     if (loading) return <div className="text-center mt-10">Loading profile...</div>;
 
@@ -47,7 +85,7 @@ const Profile = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-neutral-700">
                     <div>
                         <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Name</p>
-                        <p className="font-semibold text-lg text-neutral-800">{user.name}</p>
+                        <p className="font-semibold text-lg text-neutral-800">{user.name || user.fullName}</p>
                     </div>
 
                     <div>
@@ -61,21 +99,20 @@ const Profile = () => {
                         <>
                             <div>
                                 <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Roll No</p>
-                                <p className="font-semibold text-neutral-800">{user.rollNo}</p>
+                                <p className="font-semibold text-neutral-800">{user.rollNo || 'Not specified'}</p>
                             </div>
                             <div>
                                 <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Branch / Year</p>
                                 <p className="font-semibold text-neutral-800">
-                                    {user.branch} - {user.year}
+                                    {user.branch || 'N/A'} - {user.year || 'N/A'}
                                 </p>
                             </div>
                         </>
                     )}
                 </div>
 
-
                 {(!['member', 'student'].includes(role)) && !user.isTwoStepEnabled && (
-                    <p className='text-neutral-600 mt-6 text-sm font-medium'> <i className="ri-error-warning-line mr-1 text-orange-500" /> Two Factor Authentication is disabled <Link to="/profile/edit" className="font-semibold text-orange-655 text-orange-600 hover:underline">Enable it</Link></p>
+                    <p className='text-neutral-600 mt-6 text-sm font-medium'> <i className="ri-error-warning-line mr-1 text-orange-500" /> Two Factor Authentication is disabled <Link to="/profile/edit" className="font-semibold text-orange-600 hover:underline">Enable it</Link></p>
                 )}
 
                 <div className="mt-8 pt-6 border-t border-neutral-100 grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
@@ -125,25 +162,26 @@ const Profile = () => {
                 </div>
             </div>
 
+            {/* Quick Action Links */}
             {(role === 'member' || role === 'student') && (
-                <div className="mt-8">
-                    <Link
-                        to="/my-events"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-full hover:bg-neutral-50 hover:border-orange-500/50 hover:text-orange-600 transition-colors shadow-sm cursor-pointer"
+                <div className="mb-12">
+                    <button
+                        onClick={scrollToEvents}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-orange-600 transition-colors shadow-sm cursor-pointer"
                     >
-                        <i className="ri-calendar-event-line text-sm" /> View My Events
-                    </Link>
+                        <i className="ri-calendar-event-line text-sm" /> View My Events ({registeredEvents.length})
+                    </button>
                 </div>
             )}
 
             {(role === 'club') && (
-                <div className="mt-8 flex flex-wrap gap-4">
-                    <Link
-                        to="/my-events"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-full hover:bg-neutral-50 hover:border-orange-500/50 hover:text-orange-600 transition-colors shadow-sm cursor-pointer"
+                <div className="mb-12 flex flex-wrap gap-4">
+                    <button
+                        onClick={scrollToEvents}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-orange-600 transition-colors shadow-sm cursor-pointer"
                     >
-                        <i className="ri-calendar-event-line text-sm" /> My Events
-                    </Link>
+                        <i className="ri-calendar-event-line text-sm" /> My Events ({registeredEvents.length})
+                    </button>
                     <Link
                         to="/payments"
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-wider rounded-full transition-colors shadow-sm cursor-pointer"
@@ -158,6 +196,115 @@ const Profile = () => {
                     </Link>
                 </div>
             )}
+
+            {/* Registered Events Section */}
+            <div ref={eventsSectionRef} className="pt-4 scroll-mt-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl md:text-2xl font-extrabold text-neutral-900 flex items-center gap-2">
+                        <i className="ri-calendar-check-line text-orange-600" /> My Registered Events
+                    </h2>
+                    <span className="text-xs font-bold text-neutral-400 bg-neutral-100 px-3 py-1 rounded-full">
+                        {registeredEvents.length} Event{registeredEvents.length === 1 ? '' : 's'}
+                    </span>
+                </div>
+
+                {eventsLoading ? (
+                    <div className="text-center py-12 bg-white border border-neutral-200 rounded-xl">
+                        <p className="text-neutral-500 font-medium">Loading your registered events...</p>
+                    </div>
+                ) : registeredEvents.length === 0 ? (
+                    <div className="text-center py-12 bg-white border border-neutral-200 rounded-xl p-8">
+                        <div className="w-12 h-12 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                            <i className="ri-calendar-event-line" />
+                        </div>
+                        <h3 className="text-base font-bold text-neutral-800 mb-1">No Registered Events Found</h3>
+                        <p className="text-xs text-neutral-500 max-w-sm mx-auto mb-6">
+                            You haven't registered for any events yet. Check out the upcoming events on campus!
+                        </p>
+                        <Link
+                            to="/events"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-orange-700 transition shadow-sm"
+                        >
+                            Explore Events <i className="ri-arrow-right-line" />
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {registeredEvents.map((evt) => {
+                            const userId = user._id || user.id;
+                            const userReg = evt.registrations?.find(r => r.userId === userId || String(r.userId) === String(userId));
+                            const regStatus = userReg?.status || "REGISTERED";
+                            const eventSlug = evt.slug || evt._id;
+
+                            return (
+                                <Link
+                                    key={evt._id || evt.id}
+                                    to={`/event/${eventSlug}`}
+                                    className="group bg-white border border-neutral-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row"
+                                >
+                                    {/* Event Image */}
+                                    <div className="md:w-1/3 aspect-video md:aspect-auto relative bg-neutral-100 overflow-hidden">
+                                        <img
+                                            src={evt.imageUrl || "/CLUBSETU.png"}
+                                            alt={evt.title}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "/CLUBSETU.png";
+                                            }}
+                                        />
+                                        <span className={`absolute top-2 left-2 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                                            regStatus === 'WAITLISTED'
+                                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                                : 'bg-green-100 text-green-800 border border-green-300'
+                                        }`}>
+                                            {regStatus}
+                                        </span>
+                                    </div>
+
+                                    {/* Event Content */}
+                                    <div className="p-5 md:w-2/3 flex flex-col justify-between">
+                                        <div>
+                                            <p className="text-[11px] font-bold text-orange-600 uppercase tracking-widest mb-1">
+                                                {evt.club?.clubName || evt.createdBy?.clubName || 'Campus Event'}
+                                            </p>
+                                            <h3 className="text-base font-extrabold text-neutral-900 group-hover:text-orange-600 transition-colors line-clamp-1 mb-2">
+                                                {evt.title}
+                                            </h3>
+                                            
+                                            <div className="space-y-1 text-xs text-neutral-600 font-medium mb-4">
+                                                <p className="flex items-center gap-1.5">
+                                                    <i className="ri-time-line text-neutral-400 text-sm" />
+                                                    {new Date(evt.startTime).toLocaleDateString('en-IN', {
+                                                        day: 'numeric',
+                                                        month: 'short',
+                                                        year: 'numeric',
+                                                        hour: '2-digit',
+                                                        minute: '2-digit'
+                                                    })}
+                                                </p>
+                                                <p className="flex items-center gap-1.5">
+                                                    <i className="ri-map-pin-line text-neutral-400 text-sm" />
+                                                    {evt.venue || 'TBA'}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center justify-between pt-3 border-t border-neutral-100 mt-auto">
+                                            <span className="text-xs font-bold text-neutral-800">
+                                                {evt.entryFee ? `₹${evt.entryFee}` : 'Free'}
+                                            </span>
+                                            <span className="inline-flex items-center gap-1 text-xs font-bold text-orange-600 group-hover:translate-x-1 transition-transform">
+                                                View Event <i className="ri-arrow-right-line" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
 
             {/* Bank Information section - Restored for Club Account */}
             {(role === 'club') && (

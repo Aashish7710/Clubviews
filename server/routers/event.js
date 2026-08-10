@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/", getAllEvents);
 router.post("/", createEvent);
 router.get("/:slug", getEventBySlug);
-router.get("/user/:userId", verifyToken, getEventsForUser);
+router.get("/user/:userId", getEventsForUser);
 router.post("/:eventId/register", registerForEvent);
 router.delete("/:id", deleteEvent);
 

@@ -176,3 +176,30 @@ export const forgotPassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.params.userId || req.params.id;
+    const updateData = { ...req.body };
+    delete updateData.password;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userObj = sanitizeUser(updatedUser);
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      user: userObj,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Failed to update profile" });
+  }
+};
