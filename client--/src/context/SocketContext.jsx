@@ -34,6 +34,11 @@ export const SocketProvider = ({ children }) => {
                 newSocket.emit("join", user._id || user.id);
             });
 
+            newSocket.on("connect_error", (err) => {
+                // Silently handle socket connection errors when socket server isn't running
+                console.debug("Socket server connect attempt:", err.message);
+            });
+
             newSocket.on("new-notification", (notification) => {
                 setNotifications((prev) => [notification, ...prev]);
                 setUnreadCount((prev) => prev + 1);
