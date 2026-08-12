@@ -18,12 +18,15 @@ if (!cached) {
 }
 
 async function connectDB() {
-  const MONGODB_URI = process.env.MONGODB_URI;
+  const MONGODB_URI =
+    process.env.MONGODB_URI ||
+    "mongodb+srv://choudharyaashish613_db_user:Tanu19092006@cluster0.zyxrpkb.mongodb.net/?appName=Cluster0";
 
   if (!MONGODB_URI) {
     console.error("❌ CRITICAL ERROR: MONGODB_URI environment variable is missing!");
     throw new Error("Please define the MONGODB_URI environment variable in Render environment settings.");
   }
+
 
   if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
