@@ -53,9 +53,23 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
-// Connect Database
+// Connect Database on server start
 connectDB().catch((err) => {
-  console.error(" MongoDB connection error:", err.message);
+  console.error("MongoDB connection error on startup:", err.message);
+});
+
+// Middleware to ensure DB connection on API requests
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection error on API request:", err.message);
+    return res.status(500).json({
+      message: "Database connection failed. Please verify MONGODB_URI in Render Environment Variables and ensure MongoDB Atlas IP Whitelist allows 0.0.0.0/0.",
+      error: err.message,
+    });
+  }
 });
 
 // Routes
@@ -64,6 +78,7 @@ app.use("/api/users", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/clubs", clubRoutes);
 app.use("/api/admin", adminRoutes);
+
 
 // Test Route
 app.get("/", (req, res) => {

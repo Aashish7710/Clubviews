@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import dns from "dns";
 
-// Set fallback DNS servers (Google / Cloudflare) to fix querySrv ECONNREFUSED on local network/Windows
+// Try setting DNS servers for environments with SRV query issues (Windows/local ISPs)
 try {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 } catch (err) {
-  console.warn("Could not set DNS servers:", err.message);
+  console.warn("Could not set custom DNS servers:", err.message);
 }
 
 let cached = global.mongoose;
@@ -21,27 +21,34 @@ async function connectDB() {
   const MONGODB_URI = process.env.MONGODB_URI;
 
   if (!MONGODB_URI) {
-    throw new Error("Please define the MONGODB_URI environment variable.");
+    console.error("❌ CRITICAL ERROR: MONGODB_URI environment variable is missing!");
+    throw new Error("Please define the MONGODB_URI environment variable in Render environment settings.");
   }
 
-  if (cached.conn) {
+  if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  if (!cached.promise || mongoose.connection.readyState === 0) {
+    console.log("Connecting to MongoDB Atlas...");
     cached.promise = mongoose
       .connect(MONGODB_URI, {
         dbName: "clubview",
+        serverSelectionTimeoutMS: 10000,
+      })
+      .then((mongooseInstance) => {
+        console.log("✅ MongoDB Connected Successfully");
+        return mongooseInstance;
       })
       .catch((err) => {
-        cached.promise = null; // Reset cached promise on failure to allow retries
+        console.error("❌ MongoDB Connection Error:", err.message);
+        cached.promise = null;
         throw err;
       });
   }
 
   try {
     cached.conn = await cached.promise;
-    console.log("MongoDB Connected");
     return cached.conn;
   } catch (err) {
     cached.promise = null;
@@ -49,4 +56,4 @@ async function connectDB() {
   }
 }
 
-export default connectDB;
+export default connectDB;
