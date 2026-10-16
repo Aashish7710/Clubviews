@@ -14,15 +14,15 @@ const __dirname = path.dirname(__filename);
 
 try {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
-} catch (err) {}
+} catch (err) { }
 
 dotenv.config({ path: path.join(__dirname, ".env") });
 dotenv.config();
 
 const createAdmin = async () => {
-  const email = process.argv[2] || "admin@mnnit.ac.in";
-  const password = process.argv[3] || "admin123";
-  const name = process.argv[4] || "Super Admin";
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
+  const name = process.env.ADMIN_NAME;
 
   try {
     await connectDB();
