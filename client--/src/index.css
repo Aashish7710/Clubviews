@@ -23,6 +23,11 @@
     --text-color: var(--color-text-light);
 }
 
+html.dark {
+    --bg-color: #0f172a;
+    --text-color: #f1f5f9;
+}
+
 @font-face {
     font-family: 'myfont';
     src: url('/fonts/mysans.ttf') format('truetype');
