@@ -1,4 +1,8 @@
+# Dependencies
 node_modules/
+**/node_modules/
+
+# Environment files
 .env
 .env.local
 .env.development
@@ -8,5 +12,32 @@ node_modules/
 .env.production
 .env.production.local
 .env.*
+**/.env
+**/.env.*
 *.env
 !*.env.example
+!**/*.env.example
+
+# Build output
+dist/
+**/dist/
+dist-ssr/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+eslint-report.txt
+
+# Editor / OS files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
