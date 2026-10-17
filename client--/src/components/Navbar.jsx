@@ -161,7 +161,7 @@ const Navbar = () => {
 
   // ── Shared nav link style ─────────────────────────────────────────────────
   const navLinkCls = (path) =>
-    `relative py-1 text-[14px] font-medium tracking-widest transition-all duration-300 group ${isActive(path) ? "text-orange-600" : "text-black hover:text-orange-600"
+    `relative py-1 text-[14px] font-medium tracking-widest transition-all duration-300 group ${isActive(path) ? "text-orange-500" : isDark ? "text-white hover:text-orange-400" : "text-black hover:text-orange-600"
     }`;
 
 
@@ -193,8 +193,7 @@ const Navbar = () => {
     <>
       {/* ── Navbar ─────────────────────────────────────────────────────────── */}
       <nav
-        className={`sticky top-0 z-50 bg-white/70 backdrop-blur-md transition-shadow duration-200 myfont ${scrolled ? "shadow-sm" : ""
-          }`}
+        className={`sticky top-0 z-50 backdrop-blur-md transition-shadow duration-200 myfont ${scrolled ? "shadow-sm" : ""} ${isDark ? "bg-slate-900/85 border-b border-slate-700" : "bg-white/70"}`}
       >
         {/* Orange top accent on scroll */}
         {/* {scrolled && (
@@ -209,7 +208,7 @@ const Navbar = () => {
               to="/"
               className="flex items-center gap-2.5 shrink-0 group logofont hidden sm:block "
             >
-              <span className="font-light text-[24px] tracking-wider text-black leading-none select-none">
+              <span className={`font-light text-[24px] tracking-wider leading-none select-none ${isDark ? "text-slate-100" : "text-black"}`}>
                 Campus<span className="text-orange-600">Node</span>
               </span>
             </Link>
@@ -219,7 +218,7 @@ const Navbar = () => {
             to="/"
             className="flex items-center gap-2.5 shrink-0 group logofont sm:hidden block"
           >
-            <span className="font-light text-[24px] tracking-wider text-black leading-none select-none">
+            <span className={`font-light text-[24px] tracking-wider leading-none select-none ${isDark ? "text-slate-100" : "text-black"}`}>
               Campus<span className="text-orange-600">Node</span>
             </span>
           </Link>
@@ -256,7 +255,7 @@ const Navbar = () => {
             <div className="flex items-center" ref={searchWrapperRef}>
               <button
                 onClick={() => setSearchOpen((prev) => !prev)}
-                className="p-2 rounded-sm hover:bg-neutral-200 transition-colors duration-150 cursor-pointer text-black"
+                className={`p-2 rounded-sm transition-colors duration-150 cursor-pointer ${isDark ? "text-slate-300 hover:bg-slate-700" : "text-black hover:bg-neutral-200"}`}
                 aria-label="Search"
                 title="Search (Ctrl+K)"
               >
@@ -271,13 +270,14 @@ const Navbar = () => {
 
             {/* Theme toggle */}
             <button
+              type="button"
               onClick={() => {
                 document.documentElement.classList.add('dark-transition');
                 toggleTheme();
                 setTimeout(() => document.documentElement.classList.remove('dark-transition'), 400);
               }}
-              className="p-2 rounded-sm hover:bg-neutral-200 transition-colors duration-150 cursor-pointer"
-              aria-label="Toggle dark mode"
+              className={`p-2 rounded-sm transition-colors duration-150 cursor-pointer ${isDark ? "text-amber-300 hover:bg-slate-700" : "text-slate-700 hover:bg-neutral-200"}`}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDark ? (
@@ -316,9 +316,9 @@ const Navbar = () => {
 
                     {/* Notification Dropdown */}
                     {notifDropdownOpen && (
-                      <div className="absolute top-[calc(100%+10px)] right-0 w-80 max-h-96 overflow-y-auto bg-white border-2 border-gray-200 rounded-sm z-50 mt-1">
-                        <div className="px-4 py-3 border-b-2 border-gray-200 flex justify-between items-center bg-neutral-100 sticky top-0 z-10">
-                          <h3 className="text-[14px] font-black  tracking-widest">Notifications</h3>
+                      <div className={`absolute top-[calc(100%+10px)] right-0 w-80 max-h-96 overflow-y-auto border-2 rounded-sm z-50 mt-1 ${isDark ? "bg-slate-800 border-slate-600" : "bg-white border-gray-200"}`}>
+                        <div className={`px-4 py-3 border-b-2 flex justify-between items-center sticky top-0 z-10 ${isDark ? "bg-slate-900 border-slate-600" : "bg-neutral-100 border-gray-200"}`}>
+                          <h3 className={`text-[14px] font-black tracking-widest ${isDark ? "text-slate-100" : ""}`}>Notifications</h3>
                         </div>
                         <div className="divide-y divide-neutral-100">
                           {notifications?.length > 0 ? (
@@ -375,7 +375,7 @@ const Navbar = () => {
                   {/* ── Dropdown panel ── */}
                   {dropdownOpen && (
                     <div
-                      className="absolute top-[calc(100%+10px)] right-0 w-52 bg-white border-2 border-gray-400 rounded-sm z-50 overflow-hidden mt-2"
+                      className={`absolute top-[calc(100%+10px)] right-0 w-52 border-2 rounded-sm z-50 overflow-hidden mt-2 ${isDark ? "bg-slate-800 border-slate-600" : "bg-white border-gray-400"}`}
                       role="menu"
                     >
                       {/* User header */}
@@ -537,10 +537,10 @@ const Navbar = () => {
                 setMobileSearchOpen((prev) => !prev);
                 setNotifDropdownOpen(false);
               }}
-              className="relative  rounded-sm border-2 border-transparent hover:bg-neutral-100 transition-colors duration-150 cursor-pointer"
+              className={`relative rounded-sm border-2 border-transparent transition-colors duration-150 cursor-pointer ${isDark ? "text-slate-300 hover:bg-slate-700" : "text-black hover:bg-neutral-100"}`}
               aria-label="Search"
             >
-              <i className={`${mobileSearchOpen ? 'ri-close-line' : 'ri-search-line'} text-[20px] text-black`} />
+              <i className={`${mobileSearchOpen ? 'ri-close-line' : 'ri-search-line'} text-[20px]`} />
             </button>
 
             {user ? (
@@ -561,9 +561,9 @@ const Navbar = () => {
 
                   {/* Mobile Notification Dropdown */}
                   {notifDropdownOpen && (
-                    <div className="fixed top-16 left-5 right-5 max-h-96 overflow-y-auto bg-white border-2 border-gray-200 rounded-sm z-50">
-                      <div className="px-4 py-3 border-b-2 border-gray-200 flex justify-between items-center bg-neutral-100 sticky top-0 z-10">
-                        <h3 className="text-[14px] font-black  tracking-widest text-black">Notifications</h3>
+                    <div className={`fixed top-16 left-5 right-5 max-h-96 overflow-y-auto border-2 rounded-sm z-50 ${isDark ? "bg-slate-800 border-slate-600" : "bg-white border-gray-200"}`}>
+                      <div className={`px-4 py-3 border-b-2 flex justify-between items-center sticky top-0 z-10 ${isDark ? "bg-slate-900 border-slate-600" : "bg-neutral-100 border-gray-200"}`}>
+                        <h3 className={`text-[14px] font-black tracking-widest ${isDark ? "text-slate-100" : "text-black"}`}>Notifications</h3>
                       </div>
                       <div className="divide-y divide-neutral-100">
                         {notifications?.length > 0 ? (

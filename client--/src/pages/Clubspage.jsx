@@ -68,7 +68,7 @@ const ClubsPage = ({ isHome = false }) => {
       {/* Page Header - Hide if on Home */}
       {!isHome && (
         <div className="text-center mb-14">
-          <h1 className="text-4xl font-black text-black tracking-wide">
+          <h1 className="text-4xl font-black text-black dark:text-white tracking-wide">
             NITA Clubs & Societies
           </h1>
           <p className="mt-4 text-neutral-500 tracking-widest text-sm font-bold">
@@ -98,9 +98,9 @@ const ClubsPage = ({ isHome = false }) => {
               delay={(index % 3) * 0.1}
               key={club._id}
             >
-              <div className="bg-white border-2 border-gray-300 rounded-2xl overflow-hidden flex flex-col h-full hover:shadow-lg transition-all">
+              <div className="bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col h-full hover:shadow-lg dark:hover:shadow-slate-900/50 transition-all">
                 {/* Upper Section: Primary Branding */}
-                <div className="bg-white p-6 text-black max-h-40">
+                <div className="bg-white dark:bg-slate-800 p-6 text-black dark:text-white max-h-40">
                   <div className="flex items-center gap-4 mb-4">
                     {/* Logo: Rounded Square */}
                     <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-500 shrink-0 ">
@@ -123,31 +123,31 @@ const ClubsPage = ({ isHome = false }) => {
                     </div>
                     {/* Title & Category */}
                     <div>
-                      <h2 className="text-2xl font-black leading-tight tracking-wide ">
+                      <h2 className="text-2xl font-black leading-tight tracking-wide text-black dark:text-white">
                         {club.clubName}
                       </h2>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-black/70 mt-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-black/70 dark:text-slate-400 mt-1">
                         {club.category || "Student Club"}
                       </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-black/80 leading-relaxed line-clamp-2">
+                  <p className="text-sm text-black/80 dark:text-slate-300 leading-relaxed line-clamp-2">
                     {club.description ||
                       "The official student group dedicated to community, innovation, and campus spirit."}
                   </p>
                 </div>
 
                 {/* Lower Section: Details & Actions */}
-                <div className="bg-white p-6 text-black flex flex-col justify-between flex-grow">
+                <div className="bg-white dark:bg-slate-800 p-6 text-black dark:text-white flex flex-col justify-between flex-grow">
                   <div className="space-y-4 mb-6">
                     {/* Faculty Coordinator */}
                     <div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-black/60 block mb-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-black/60 dark:text-slate-400 block mb-1">
                         Faculty Coordinator
                       </span>
-                      <p className="text-[15px] font-bold text-black">
+                      <p className="text-[15px] font-bold text-black dark:text-slate-200">
                         {club.facultyCoordinators &&
                           club.facultyCoordinators.length > 0
                           ? club.facultyCoordinators
@@ -159,10 +159,10 @@ const ClubsPage = ({ isHome = false }) => {
 
                     {/* Student Lead */}
                     <div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-black/60 block mb-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-black/60 dark:text-slate-400 block mb-1">
                         Student Lead
                       </span>
-                      <p className="text-[15px] font-bold text-black">
+                      <p className="text-[15px] font-bold text-black dark:text-slate-200">
                         {club.studentCoordinators &&
                           club.studentCoordinators.length > 0
                           ? club.studentCoordinators.join(", ")
@@ -198,7 +198,7 @@ const ClubsPage = ({ isHome = false }) => {
                                 href={platform === 'whatsapp' ? `https://wa.me/${link.url.replace(/\s+/g, '')}` : link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-10 h-10 flex items-center justify-center transition-all text-black/70 hover:text-black"
+                                className="w-10 h-10 flex items-center justify-center transition-all text-black/70 dark:text-slate-300 hover:text-black dark:hover:text-white"
                                 title={link.platform}
                               >
                                 {getIcon()}
@@ -214,7 +214,7 @@ const ClubsPage = ({ isHome = false }) => {
                   <div className="flex items-center gap-3">
                     <Link
                       to={`/club/${club.slug || club._id}`}
-                      className="flex-1 flex items-center justify-center gap-2 py-2 border border-black/40 rounded-xl text-[12px] font-bold uppercase tracking-widest hover:bg-black/10 transition-all font-black"
+                      className="flex-1 flex items-center justify-center gap-2 py-2 border border-black/40 dark:border-slate-500 dark:text-slate-200 rounded-xl text-[12px] font-bold uppercase tracking-widest hover:bg-black/10 dark:hover:bg-slate-700 transition-all font-black"
                     >
                       <ArrowUpRightIcon >
                         Explore

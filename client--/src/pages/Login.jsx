@@ -112,42 +112,42 @@ const Login = () => {
   };
 
   return (
-  <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div className="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     
     <div className="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 className="text-center text-3xl font-bold text-gray-800">
+      <h2 className="text-center text-3xl font-bold text-gray-800 dark:text-slate-100">
         Sign in to Campus<span className="text-orange-600">Node</span>
       </h2>
     </div>
 
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-200">
+      <div className="bg-white dark:bg-slate-800 py-8 px-6 shadow-xl rounded-xl border border-gray-200 dark:border-slate-700">
 
         {!showOTP ? (
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && <div className="text-red-500 text-sm text-center font-medium">{error}</div>}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Email Address</label>
               <input
                 name="email"
                 type="email"
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary dark:bg-slate-700 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
               <input
                 name="password"
                 type="password"
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary dark:bg-slate-700 dark:text-slate-100"
               />
               <div className="flex justify-end mt-1">
                 <Link to="/forgot-password" size="sm" className="text-sm text-orange-600 hover:underline font-medium tracking-tight">
@@ -156,11 +156,11 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm">
-              <label className="block text-sm font-medium text-gray-800 mb-2">
+            <div className="p-4 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-lg shadow-sm">
+              <label className="block text-sm font-medium text-gray-800 dark:text-slate-200 mb-2">
                 Human Verification
               </label>
-              <p className="text-sm text-gray-600 font-medium italic mb-2">
+              <p className="text-sm text-gray-600 dark:text-slate-400 font-medium italic mb-2">
                 {captcha.text}
               </p>
               <input
@@ -224,7 +224,7 @@ const Login = () => {
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">New student?</span>
+            <span className="px-2 bg-white dark:bg-slate-800 text-gray-500 dark:text-slate-400">New student?</span>
           </div>
         </div>
 

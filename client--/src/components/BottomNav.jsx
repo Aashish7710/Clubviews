@@ -92,7 +92,7 @@ const BottomNav = () => {
     return (
         <>
             {/* Bottom Navigation Bar */}
-            <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full pb-[env(safe-area-inset-bottom)] bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+            <nav className={`md:hidden fixed bottom-0 left-0 z-50 w-full pb-[env(safe-area-inset-bottom)] backdrop-blur-md border-t shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] ${isDark ? "bg-slate-900/90 border-slate-700" : "bg-white/90 border-gray-200"}`}>
                 <div className="flex justify-around items-center h-16 px-2">
                     {navItems.map((item, index) => {
                         const Icon = item.icon;
@@ -156,8 +156,7 @@ const BottomNav = () => {
                     {/* Drawer Content */}
                     <div
                         ref={drawerRef}
-                        className={`fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-xl border-t border-gray-200 transition-transform duration-300 ease-in-out md:hidden pb-[env(safe-area-inset-bottom)] max-h-[85vh] flex flex-col ${drawerOpen ? "translate-y-0" : "translate-y-full"
-                            }`}
+                        className={`fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl shadow-xl border-t transition-transform duration-300 ease-in-out md:hidden pb-[env(safe-area-inset-bottom)] max-h-[85vh] flex flex-col ${drawerOpen ? "translate-y-0" : "translate-y-full"} ${isDark ? "bg-slate-800 border-slate-700" : "bg-white border-gray-200"}`}
                     >
                         {/* Drawer Handle */}
                         <div className="w-full flex justify-center pt-3 pb-2" onClick={() => setDrawerOpen(false)}>
@@ -167,7 +166,7 @@ const BottomNav = () => {
                         <div className="flex justify-between items-center px-6 pb-4 border-b border-neutral-100">
                             <div>
                                 <p className="text-[11px] font-bold tracking-widest text-neutral-400 mb-0.5">Logged in as</p>
-                                <p className="text-base font-black text-black">{user.name}</p>
+                                <p className={`text-base font-black ${isDark ? "text-slate-100" : "text-black"}`}>{user.name}</p>
                                 <p className="text-[11px] tracking-widest text-orange-600 font-bold mt-0.5">
                                     {role === "club"
                                         ? "Club Account"
@@ -293,7 +292,7 @@ const BottomNav = () => {
                             )}
                         </div>
 
-                        <div className="px-4 py-3 border-t border-neutral-100 bg-neutral-50/50">
+                        <div className={`px-4 py-3 border-t ${isDark ? "border-slate-700 bg-slate-900/50" : "border-neutral-100 bg-neutral-50/50"}`}>
                             {/* Dark mode toggle */}
                             <button
                                 onClick={() => {
@@ -303,7 +302,7 @@ const BottomNav = () => {
                                 }}
                                 className="w-full flex items-center justify-between py-3 px-4 mb-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 transition-colors"
                             >
-                                <span className="flex items-center gap-2 text-sm font-semibold text-black">
+                                <span className={`flex items-center gap-2 text-sm font-semibold ${isDark ? "text-slate-200" : "text-black"}`}>
                                     {isDark ? <Sun size={18} /> : <Moon size={18} />}
                                     {isDark ? 'Light Mode' : 'Dark Mode'}
                                 </span>
